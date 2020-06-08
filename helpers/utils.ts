@@ -1,6 +1,6 @@
 export
-function generatePosts(data) {
-	return data?.documents?.map((post) => {
+function generatePosts(data: any) {
+	return data?.documents?.map((post: any) => {
 				return {
 					pid: post.name.split("/").pop(),
 					title: post.fields.title.stringValue,
