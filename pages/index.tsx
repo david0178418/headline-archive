@@ -3,13 +3,14 @@ import Link from "next/link";
 import useSWR from "swr";
 
 import { generatePosts } from "../helpers/utils";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 // Only fetchg the title and blurb.
 const FirestoreBlogPostsURL = `https://firestore.googleapis.com/v1/projects/${process.env.FIREBASE_PROJECT_ID}/databases/(default)/documents/posts?mask.fieldPaths=blurb&mask.fieldPaths=title`;
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
+export default
 function Home() {
 	const { data, error } = useSWR(FirestoreBlogPostsURL, fetcher);
 	const posts = generatePosts(data);
@@ -192,5 +193,3 @@ function Home() {
 		</div>
 	);
 }
-
-export default Home;

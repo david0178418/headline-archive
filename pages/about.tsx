@@ -10,6 +10,7 @@ export async function getStaticProps() {
 	};
 }
 
+export default 
 function About({ data }) {
 	return (
 		<div className="container">
@@ -195,5 +196,3 @@ function About({ data }) {
 		</div>
 	);
 }
-
-export default About;
