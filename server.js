@@ -2,10 +2,13 @@ const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const next = require("next");
 const config = require("./next.config");
+const { takeScreenShotOnRequest } = require("./functions/screenshot");
 
 admin.initializeApp();
 
 const dev = process.env.NODE_ENV !== "production";
+
+//@ts-ignore
 const app = next({
 	dev,
 	// the absolute directory from the package.json file that initialises this module
@@ -21,3 +24,11 @@ const server = functions.https.onRequest((request, response) => {
 });
 
 exports.nextjs = { server };
+
+exports.takeScreenshot = functions
+	.runWith({
+		timeoutSeconds: 300,
+		memory: '2GB',
+	})
+	.https
+	.onRequest(takeScreenShotOnRequest);
