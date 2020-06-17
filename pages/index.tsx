@@ -4,28 +4,14 @@ import {
 	Nav,
 	Card,
 } from 'react-bootstrap';
-import Parser from 'rss-parser';
 import { useEffect } from 'react';
-
-const data = [{
-	imageUrl: 'https://via.placeholder.com/250x350',
-}, {
-	imageUrl: 'https://via.placeholder.com/250x350',
-}, {
-	imageUrl: 'https://via.placeholder.com/250x350',
-}];
 
 export
 async function getServerSideProps() {
-	const parser = new Parser();
-	const feeds = await Promise.all([
-		parser.parseURL('http://feeds.foxnews.com/foxnews/latest'),
-		parser.parseURL('http://rss.cnn.com/rss/cnn_topstories.rss'),
-	]);
-
+	const { getProps } = await import('../functions/server-side-props');
 	return {
 		props: {
-			feeds,
+			feeds: await getProps(),
 		},
 	};
 }
@@ -64,7 +50,7 @@ function Home({feeds}: any) {
 					</Nav.Item>
 				</Nav>
 
-				{data.map((d, i) => (
+				{[].map((d, i) => (
 					<Card key={i}>
 						<Card.Body>
 							<Card.Img variant="top" src="https://via.placeholder.com/640x480" />

@@ -2,9 +2,10 @@ const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const next = require("next");
 const config = require("./next.config");
-const { takeScreenShotOnRequest } = require("./functions/screenshot");
+const { captureScreenshots } = require("./functions/screenshot");
+const { collectRssFeeds } = require("./functions/rss-feeds");
 
-admin.initializeApp();
+require('./functions/init');
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -31,4 +32,57 @@ exports.takeScreenshot = functions
 		memory: '2GB',
 	})
 	.https
-	.onRequest(takeScreenShotOnRequest);
+	.onRequest(async (request, response) => {
+		try {
+			await captureScreenshots();
+			response.send({
+				ok: true,
+			});
+		} catch (err) {
+			console.error(JSON.stringify(err));
+			response.send({
+				ok: false,
+				err,
+			});
+		}
+	});
+
+
+exports.collectRssFeeds = functions
+	.runWith({
+		timeoutSeconds: 300,
+	})
+	.https
+	.onRequest(async (request, response) => {
+		try {
+			await collectRssFeeds();
+			response.send({
+				ok: true,
+			});
+		} catch (err) {
+			console.error(JSON.stringify(err));
+			response.send({
+				ok: false,
+				err,
+			});
+		}
+	});
+
+exports.scheduledScreenshots = functions
+	.runWith({
+		timeoutSeconds: 300,
+		memory: '2GB',
+	})
+	.pubsub
+	.schedule('5 * * * *')
+	.timeZone('America/Chicago')
+	.onRun(captureScreenshots);
+
+exports.scheduledRssFeeds = functions
+	.runWith({
+		timeoutSeconds: 300,
+	})
+	.pubsub
+	.schedule('5 * * * *')
+	.timeZone('America/Chicago')
+	.onRun(collectRssFeeds);

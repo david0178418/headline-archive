@@ -1,67 +1,57 @@
 const puppeteer = require('puppeteer');
 const admin = require('firebase-admin');
+const { sites } = require('./sites');
+const { format } = require('date-fns');
 
-exports.takeScreenShotOnRequest =
-async function takeScreenShotOnRequest(request, response) {
+exports.captureScreenshots =
+async function captureScreenshots(request, response) {
 	console.log('starting');
-	try {
-		const imageBuffer = await generateScreenShot();
-		console.log('generated screenshot');
-		await saveScreenShot(imageBuffer);
-		console.log('saved screenshot');
-		response.send({
-			ok: true,
-		});
-	} catch (err) {
-		console.error(err);
-		response.send({
-			ok: false,
-		});
-	}
-}
 
-async function generateScreenShot() {
+	const dir = `screenshots/${format(new Date(), 'yyyy/MM/dd/HH')}`;
 	const browser = await puppeteer.launch({args: ['--no-sandbox']});
 	console.log('browser initialized');
 
 	const page = await browser.newPage();
 
 	await page.setDefaultNavigationTimeout(0);
-	// Screenshot size
 	await page.setViewport({width: 1024, height: 576});
 
-	// Go to your website
-	await page.goto('https://cnn.com', {
-		"waitUntil": "networkidle0",
-	});
+	for(const site of sites) {
+		try {
+			await page.goto(site.pageUrl, {
+				"waitUntil": "networkidle0",
+			});
+		
+			console.log('page opened');
+		
+			// Disable service workers
+			//@ts-ignore
+			await page._client.send('ServiceWorker.enable');
+			//@ts-ignore
+			await page._client.send('ServiceWorker.stopAllWorkers');
+			const imageBuffer = await page.screenshot();
 
-	console.log('page opened');
+			await saveScreenShot(`${dir}/${site.key}.png`, imageBuffer);
+		} catch(e) {
+			console.error(`Error capturing site "${site}"`);
+		}
+	}
 
-	// Disable service workers
-	//@ts-ignore
-	await page._client.send('ServiceWorker.enable');
-	//@ts-ignore
-	await page._client.send('ServiceWorker.stopAllWorkers');
-
-	// Take the screenshot
-	const imageBuffer = await page.screenshot();
-	console.log('image captured');
-
+	console.log('generated screenshot');
 	await browser.close();
-
-	return imageBuffer;
 }
 
-async function saveScreenShot(imageBuffer) {
+async function saveScreenShot(path, imageBuffer) {
 	if (!imageBuffer || imageBuffer === '') {
 		throw new Error('No screenshot');
 	}
+
 
 	// We get the instance of our default bucket
 	const bucket = admin.storage().bucket();
 
 	// Create a file object
-	const file = bucket.file(`screenshots/deckdeckgo.png`);
+	const file = bucket.file(path);
 
 	// Save the image
 	await file.save(imageBuffer);
