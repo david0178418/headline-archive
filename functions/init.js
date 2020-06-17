@@ -1,5 +1,5 @@
-import admin from 'firebase-admin';
-import serviceAccount from './headline-archive-firebase-adminsdk-key.json';
+const admin = require('firebase-admin');
+const serviceAccount = require('./headline-archive-firebase-adminsdk-key.json');
 
 admin.initializeApp({
 	// @ts-ignore
