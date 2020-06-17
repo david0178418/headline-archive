@@ -5,6 +5,7 @@ import {
 	Card,
 } from 'react-bootstrap';
 import { useEffect } from 'react';
+import { Feed } from 'interfaces';
 
 export
 async function getServerSideProps() {
@@ -16,11 +17,23 @@ async function getServerSideProps() {
 	};
 }
 
+const BUCKET = 'headline-archive.appspot.com';
+const BASE_URL = 'https://firebasestorage.googleapis.com';
+
+function imageUrl(feed: Feed) {
+	return `${BASE_URL}/v0/b/${BUCKET}/o/${encodeURIComponent(`screenshots/${feed.screenDir}/${feed.key}.png`)}?alt=media`;
+}
+
+interface Props {
+	feeds: Feed[];
+}
+
 export default
-function Home({feeds}: any) {
+function Home({feeds}: Props) {
 	useEffect(() => {
 		console.log(feeds);
 	}, []);
+
 	return (
 		<div>
 			<Head>
@@ -49,13 +62,18 @@ function Home({feeds}: any) {
 						</Nav.Link>
 					</Nav.Item>
 				</Nav>
-
-				{[].map((d, i) => (
-					<Card key={i}>
+				{feeds?.map(f => (
+					<Card key={f.key}>
 						<Card.Body>
-							<Card.Img variant="top" src="https://via.placeholder.com/640x480" />
+							<Card.Img
+								variant="top"
+								src={imageUrl(f)}
+							/>
+							<Card.Title>
+								{f.feed.title}
+							</Card.Title>
 							<Card.Text>
-								fooo
+								{f.feed.description}
 							</Card.Text>
 						</Card.Body>
 					</Card>

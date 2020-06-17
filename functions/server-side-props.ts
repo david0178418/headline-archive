@@ -23,13 +23,12 @@ async function getProps(cutOffDate = new Date()) {
 				.limit(1)
 				.get()
 		).forEach(doc => {
-			feeds.push(
-				doc.data(),
-			);
+			const data: any = doc.data();
+			data.feed.items = data.feed.items.slice(0, 10)
+
+			feeds.push(data);
 		});
 	}
 
-	return {
-		feeds,
-	};
+	return feeds;
 }
