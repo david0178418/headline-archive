@@ -113,6 +113,9 @@ function SiteCard(props: SiteCardProp) {
 					onClick={onToggle}
 				>
 					Top Stories
+					<svg className="bi bi-chevron-down" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+					</svg>
 				</Accordion.Toggle>
 				<Accordion.Collapse eventKey={rowKey}>
 					<ListGroup variant="flush">
@@ -187,14 +190,15 @@ function Home({feeds}: Props) {
 	return (
 		<div>
 			<Head>
-				<title>Next.js on Firebase Hosting</title>
+				<title>
+					Headline Archive
+				</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<title>
-				Fiiiz
-			</title>
-
 			<Container>
+				<h2>
+					Headline Archive
+				</h2>
 				<Container>
 					{chunk(feeds, 3).map((rowFeeds, i) => (
 						<ArticleRow
