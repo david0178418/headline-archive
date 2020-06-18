@@ -1,1 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
+
+.modal-dialog{
+	&.screenshot-preview {
+		width: 90%;
+		max-width: none;
+	}
+}

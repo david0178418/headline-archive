@@ -3,9 +3,15 @@ import {
 	Container,
 	Nav,
 	Card,
+	ListGroup,
+	Image,
+	Row,
+	Col,
+	Modal,
 } from 'react-bootstrap';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Feed } from 'interfaces';
+import { format } from 'date-fns';
 
 export
 async function getServerSideProps() {
@@ -19,6 +25,86 @@ async function getServerSideProps() {
 
 const BUCKET = 'headline-archive.appspot.com';
 const BASE_URL = 'https://firebasestorage.googleapis.com';
+
+interface ImagePreviewProps {
+	open: boolean;
+	onClose(): void;
+	img: string;
+}
+
+function ImagePreview(props: ImagePreviewProps) {
+	const {
+		img,
+		open,
+		onClose,
+	} = props;
+
+	return (
+		<>
+			<Modal
+				show={open}
+				onHide={onClose}
+				dialogClassName="screenshot-preview"
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>
+						Custom Modal Styling
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Image src={img} fluid rounded />
+				</Modal.Body>
+			</Modal>
+		</>
+	);
+}
+
+interface SiteCardProp {
+	feed: Feed;
+}
+
+function SiteCard(props: SiteCardProp) {
+	const [modalOpen, setModalOpen] = useState(false);
+	const { feed } = props;
+	const img = imageUrl(feed);
+
+	return (
+		<Card>
+			<Card.Footer>
+				<small className="text-muted">
+					{format(new Date(feed.date), 'PPpp')}
+				</small>
+			</Card.Footer>
+			<Card.Img
+				variant="top"
+				src={img}
+				onClick={() => setModalOpen(true)}
+			/>
+			<ImagePreview
+				img={img}
+				open={modalOpen}
+				onClose={() => setModalOpen(false)}
+			/>
+			<Card.Body>
+				<Card.Title>
+					{feed.feed.title}
+				</Card.Title>
+			</Card.Body>
+			<Card.Header>
+				Top Stories
+			</Card.Header>
+			<ListGroup variant="flush">
+				{feed.feed.items.map((item, i) => (
+					<ListGroup.Item key={i}>
+						<a target="__blank" href={item.link}>
+							{item.title}
+						</a>
+					</ListGroup.Item>
+				))}
+			</ListGroup>
+		</Card>
+	);
+}
 
 function imageUrl(feed: Feed) {
 	return `${BASE_URL}/v0/b/${BUCKET}/o/${encodeURIComponent(`screenshots/${feed.screenDir}/${feed.key}.png`)}?alt=media`;
@@ -45,7 +131,6 @@ function Home({feeds}: Props) {
 			</title>
 
 			<Container>
-
 				<Nav activeKey="/home" >
 					<Nav.Item>
 						<Nav.Link href="/home">Active</Nav.Link>
@@ -62,23 +147,15 @@ function Home({feeds}: Props) {
 						</Nav.Link>
 					</Nav.Item>
 				</Nav>
-				{feeds?.map(f => (
-					<Card key={f.key}>
-						<Card.Body>
-							<Card.Img
-								variant="top"
-								src={imageUrl(f)}
-							/>
-							<Card.Title>
-								{f.feed.title}
-							</Card.Title>
-							<Card.Text>
-								{f.feed.description}
-							</Card.Text>
-						</Card.Body>
-					</Card>
-				))}
-
+				<Container>
+					<Row>
+						{feeds?.map(f => (
+							<Col key={f.key}>
+								<SiteCard feed={f} />
+							</Col>
+						))}
+					</Row>
+				</Container>
 			</Container>
 
 			<style jsx>{`

@@ -24,6 +24,7 @@ interface Feed {
 		link: string;
 		title: string;
 		lastBuildDate: string;
+		pubDate: string;
 	};
 	feedUrl: string;
 	pageUrl: string;
