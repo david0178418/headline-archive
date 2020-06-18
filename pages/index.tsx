@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import {
 	Container,
-	Nav,
 	Card,
 	ListGroup,
 	Image,
@@ -10,6 +9,7 @@ import {
 	Modal,
 	OverlayTrigger,
 	Popover,
+	Accordion,
 } from 'react-bootstrap';
 import { useState } from 'react';
 import { Feed } from 'interfaces';
@@ -64,7 +64,10 @@ function ImagePreview(props: ImagePreviewProps) {
 
 interface SiteCardProp {
 	feed: Feed;
+	rowKey: string;
 	last?: boolean;
+	expanded?: boolean;
+	onToggle(): void;
 }
 
 function SiteCard(props: SiteCardProp) {
@@ -72,6 +75,9 @@ function SiteCard(props: SiteCardProp) {
 	const {
 		feed,
 		last,
+		rowKey,
+		expanded,
+		onToggle,
 	} = props;
 	const img = imageUrl(feed);
 
@@ -95,36 +101,76 @@ function SiteCard(props: SiteCardProp) {
 			/>
 			<Card.Body>
 				<Card.Title>
-					{feed.feed.title}
+					<a href={feed.pageUrl} target="__blank">
+						{feed.label}
+					</a>
 				</Card.Title>
 			</Card.Body>
-			<Card.Header>
-				Top Stories
-			</Card.Header>
-			<ListGroup variant="flush">
-				{feed.feed.items.map((item, i) => (
-					<ListGroup.Item key={i}>
-						<OverlayTrigger
-							trigger="hover"
-							placement={last ? 'left' : 'right'}
-							overlay={
-								<Popover id={item.guid}>
-									<Popover.Content>
-										{item.contentSnippet}
-									</Popover.Content>
-								</Popover>
-							}
-						>
-							<div>
-								<a target="__blank" href={item.link}>
-									{item.title}
-								</a>
-							</div>
-						</OverlayTrigger>
-					</ListGroup.Item>
-				))}
-			</ListGroup>
+			<Accordion activeKey={expanded ? rowKey : ''}>
+				<Accordion.Toggle
+					as={Card.Header}
+					eventKey={rowKey}
+					onClick={onToggle}
+				>
+					Top Stories
+				</Accordion.Toggle>
+				<Accordion.Collapse eventKey={rowKey}>
+					<ListGroup variant="flush">
+						{feed.feed.items.map((item, i) => (
+							<ListGroup.Item key={i}>
+								<OverlayTrigger
+									trigger="hover"
+									placement={last ? 'left' : 'right'}
+									overlay={
+										<Popover id={item.guid}>
+											<Popover.Content>
+												{item.contentSnippet}
+											</Popover.Content>
+										</Popover>
+									}
+								>
+									<div>
+										<a target="__blank" href={item.link}>
+											{item.title}
+										</a>
+									</div>
+								</OverlayTrigger>
+							</ListGroup.Item>
+						))}
+					</ListGroup>
+				</Accordion.Collapse>
+			</Accordion>
 		</Card>
+	);
+}
+
+interface ArticleRowProps {
+	feeds: Feed[];
+	rowKey: number;
+}
+
+function ArticleRow(props: ArticleRowProps) {
+	const [expanded, setExpanded] = useState(false);
+	const {
+		feeds,
+		rowKey,
+	} = props;
+	const rowKeyStr = `key-${rowKey}`;
+
+	return (
+		<Row>
+			{feeds.map((f, j) => (
+				<Col key={f.key} md={12} lg={4}>
+					<SiteCard
+						feed={f}
+						rowKey={rowKeyStr}
+						last={j === 2}
+						expanded={expanded}
+						onToggle={() => setExpanded(!expanded)}
+					/>
+				</Col>
+			))}
+		</Row>
 	);
 }
 
@@ -151,16 +197,11 @@ function Home({feeds}: Props) {
 			<Container>
 				<Container>
 					{chunk(feeds, 3).map((rowFeeds, i) => (
-						<Row key={i}>
-							{rowFeeds.map((f, j) => (
-								<Col key={f.key}>
-									<SiteCard
-										feed={f}
-										last={j === 2}
-									/>
-								</Col>
-							))}
-						</Row>
+						<ArticleRow
+							key={i}
+							rowKey={i}
+							feeds={rowFeeds}
+						/>
 					))}
 				</Container>
 			</Container>

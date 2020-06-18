@@ -12,6 +12,7 @@ interface Article {
 export
 interface Feed {
 	key: string;
+	label: string;
 	date: string;
 	feed: {
 		items: Article[];
