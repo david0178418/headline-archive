@@ -33,11 +33,15 @@ interface ImagePreviewProps {
 	open: boolean;
 	onClose(): void;
 	img: string;
+	label: string;
+	link: string;
 }
 
 function ImagePreview(props: ImagePreviewProps) {
 	const {
 		img,
+		label,
+		link,
 		open,
 		onClose,
 	} = props;
@@ -51,7 +55,9 @@ function ImagePreview(props: ImagePreviewProps) {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title>
-						Custom Modal Styling
+						<a href={link} target="__blank">
+							{label}
+						</a>
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -96,6 +102,8 @@ function SiteCard(props: SiteCardProp) {
 			/>
 			<ImagePreview
 				img={img}
+				label={feed.label}
+				link={feed.pageUrl}
 				open={modalOpen}
 				onClose={() => setModalOpen(false)}
 			/>
