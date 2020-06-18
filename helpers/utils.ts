@@ -8,3 +8,13 @@ function generatePosts(data: any) {
 				};
 			}) || [];
 }
+
+
+export
+function chunk<T>(list: T[], size: number) {
+	return new Array(Math.ceil(list.length / size))
+		.fill([])
+		.map(
+			(_,i) => list.slice(i*size,i*size+size)
+		);
+}

@@ -7,7 +7,6 @@ const {
 	firestore,
 } = admin;
 
-
 export
 async function getProps(cutOffDate = new Date()) {
 	const f = firestore();

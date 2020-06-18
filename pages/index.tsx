@@ -8,10 +8,13 @@ import {
 	Row,
 	Col,
 	Modal,
+	OverlayTrigger,
+	Popover,
 } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Feed } from 'interfaces';
 import { format } from 'date-fns';
+import { chunk } from 'helpers/utils';
 
 export
 async function getServerSideProps() {
@@ -61,11 +64,15 @@ function ImagePreview(props: ImagePreviewProps) {
 
 interface SiteCardProp {
 	feed: Feed;
+	last?: boolean;
 }
 
 function SiteCard(props: SiteCardProp) {
 	const [modalOpen, setModalOpen] = useState(false);
-	const { feed } = props;
+	const {
+		feed,
+		last,
+	} = props;
 	const img = imageUrl(feed);
 
 	return (
@@ -77,6 +84,7 @@ function SiteCard(props: SiteCardProp) {
 			</Card.Footer>
 			<Card.Img
 				variant="top"
+				className="card-screenshot"
 				src={img}
 				onClick={() => setModalOpen(true)}
 			/>
@@ -96,9 +104,23 @@ function SiteCard(props: SiteCardProp) {
 			<ListGroup variant="flush">
 				{feed.feed.items.map((item, i) => (
 					<ListGroup.Item key={i}>
-						<a target="__blank" href={item.link}>
-							{item.title}
-						</a>
+						<OverlayTrigger
+							trigger="hover"
+							placement={last ? 'left' : 'right'}
+							overlay={
+								<Popover id={item.guid}>
+									<Popover.Content>
+										{item.contentSnippet}
+									</Popover.Content>
+								</Popover>
+							}
+						>
+							<div>
+								<a target="__blank" href={item.link}>
+									{item.title}
+								</a>
+							</div>
+						</OverlayTrigger>
 					</ListGroup.Item>
 				))}
 			</ListGroup>
@@ -116,10 +138,6 @@ interface Props {
 
 export default
 function Home({feeds}: Props) {
-	useEffect(() => {
-		console.log(feeds);
-	}, []);
-
 	return (
 		<div>
 			<Head>
@@ -131,30 +149,19 @@ function Home({feeds}: Props) {
 			</title>
 
 			<Container>
-				<Nav activeKey="/home" >
-					<Nav.Item>
-						<Nav.Link href="/home">Active</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="link-1">Link</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="link-2">Link</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="disabled" disabled>
-						Disabled
-						</Nav.Link>
-					</Nav.Item>
-				</Nav>
 				<Container>
-					<Row>
-						{feeds?.map(f => (
-							<Col key={f.key}>
-								<SiteCard feed={f} />
-							</Col>
-						))}
-					</Row>
+					{chunk(feeds, 3).map((rowFeeds, i) => (
+						<Row key={i}>
+							{rowFeeds.map((f, j) => (
+								<Col key={f.key}>
+									<SiteCard
+										feed={f}
+										last={j === 2}
+									/>
+								</Col>
+							))}
+						</Row>
+					))}
 				</Container>
 			</Container>
 

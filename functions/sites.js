@@ -10,4 +10,20 @@ exports.sites = [{
 	key: 'foxnews',
 	pageUrl: 'https://www.foxnews.com/',
 	feedUrl: 'http://feeds.foxnews.com/foxnews/latest',
+}, {
+	key: 'huffpost',
+	pageUrl: 'https://www.huffpost.com/',
+	feedUrl: 'https://www.huffpost.com/section/us-news/feed',
+}, {
+	key: 'nytimes',
+	pageUrl: 'https://www.nytimes.com/',
+	feedUrl: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+}, {
+	key: 'reddit',
+	pageUrl: 'https://www.reddit.com/',
+	feedUrl: 'https://www.reddit.com/.rss',
+}, {
+	key: 'reddit',
+	pageUrl: 'https://www.washingtonpost.com/',
+	feedUrl: 'http://feeds.washingtonpost.com/rss/politics',
 }];
