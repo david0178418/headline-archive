@@ -14,7 +14,10 @@ async function captureScreenshots(request, response) {
 	const page = await browser.newPage();
 
 	await page.setDefaultNavigationTimeout(0);
-	await page.setViewport({width: 1024, height: 576});
+	await page.setViewport({
+		width: 576,
+		height: 1024,
+	});
 
 	for(const site of sites) {
 		try {

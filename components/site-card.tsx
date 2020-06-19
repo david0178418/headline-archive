@@ -85,7 +85,7 @@ function SiteCard(props: Props) {
 						{feed.feed.items.map((item, i) => (
 							<ListGroup.Item key={i}>
 								<OverlayTrigger
-									trigger="hover"
+									trigger={['focus', 'hover']}
 									placement={last ? 'left' : 'right'}
 									overlay={
 										<Popover id={item.guid}>
