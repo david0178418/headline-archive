@@ -43,11 +43,13 @@ function SiteCard(props: Props) {
 
 	return (
 		<Card>
-			<Card.Footer>
-				<small className="text-muted">
-					{format(new Date(feed.date), 'PPpp')}
-				</small>
-			</Card.Footer>
+			<Card.Body>
+				<Card.Title>
+					<a href={feed.pageUrl} target="__blank">
+						{feed.label}
+					</a>
+				</Card.Title>
+			</Card.Body>
 			<Card.Img
 				variant="top"
 				className="card-screenshot"
@@ -61,18 +63,12 @@ function SiteCard(props: Props) {
 				open={modalOpen}
 				onClose={() => setModalOpen(false)}
 			/>
-			<Card.Body>
-				<Card.Title>
-					<a href={feed.pageUrl} target="__blank">
-						{feed.label}
-					</a>
-				</Card.Title>
-			</Card.Body>
 			<Accordion activeKey={expanded ? rowKey : ''}>
 				<Accordion.Toggle
 					as={Card.Header}
 					eventKey={rowKey}
 					onClick={onToggle}
+					className="top-stories-toggle"
 				>
 					Top Stories
 					{expanded ?
@@ -106,6 +102,11 @@ function SiteCard(props: Props) {
 					</ListGroup>
 				</Accordion.Collapse>
 			</Accordion>
+			<Card.Footer>
+				<small className="text-muted">
+					{format(new Date(feed.date), 'PPpp')}
+				</small>
+			</Card.Footer>
 		</Card>
 	);
 }

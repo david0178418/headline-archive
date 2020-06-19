@@ -8,6 +8,18 @@
 	}
 }
 
-.card-screenshot {
+.hoverable {
 	cursor: pointer;
+}
+
+.card-screenshot {
+	@extend .hoverable;
+}
+
+.top-stories-toggle {
+	@extend .hoverable;
+
+	svg {
+		float: right;
+	}
 }

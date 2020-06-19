@@ -28,9 +28,4 @@ exports.sites = [{
 	label: 'Reddit',
 	pageUrl: 'https://www.reddit.com/',
 	feedUrl: 'https://www.reddit.com/.rss',
-}, {
-	key: 'washingtonpost',
-	label: 'Washington Post',
-	pageUrl: 'https://www.washingtonpost.com/',
-	feedUrl: 'http://feeds.washingtonpost.com/rss/politics',
 }];
