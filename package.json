@@ -26,6 +26,7 @@
 		"puppeteer": "^2.1.1",
 		"react": "^16.13.1",
 		"react-bootstrap": "^1.0.1",
+		"react-bootstrap-icons": "^1.0.3-alpha4",
 		"react-dom": "^16.13.1",
 		"rss-parser": "^3.8.0",
 		"swr": "^0.2.3"
