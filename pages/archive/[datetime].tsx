@@ -7,11 +7,11 @@ import { chunk } from 'helpers/utils';
 import { ArticleRow } from '@components/article-row';
 
 export
-async function getServerSideProps() {
+async function getServerSideProps({params}: any) {
 	const { getProps } = await import('@functions/server-side-props');
 	return {
 		props: {
-			feeds: await getProps(),
+			feeds: await getProps(params.datetime),
 		},
 	};
 }
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default
-function Home({feeds}: Props) {
+function Archive({feeds}: Props) {
 	return (
 		<div>
 			<Head>

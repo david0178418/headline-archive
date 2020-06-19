@@ -8,16 +8,14 @@ const {
 } = admin;
 
 export
-async function getProps(cutOffDate = new Date()) {
+async function getProps(cutOffDateIso = new Date().toISOString()) {
 	const f = firestore();
 	const feeds: Feed[] = [];
-	const cutOff = cutOffDate.toISOString();
-
 	for(const site of sites) {
 		(
 			await f.collection('feeds')
 				.where('key', '==', site.key)
-				.where('date', '<', cutOff)
+				.where('date', '<', cutOffDateIso)
 				.orderBy('date', 'desc')
 				.limit(1)
 				.get()
