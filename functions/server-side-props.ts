@@ -21,7 +21,10 @@ async function getProps(cutOffDateIso = new Date().toISOString()) {
 				.get()
 		).forEach(doc => {
 			const data: any = doc.data();
-			data.feed.items = data.feed.items.slice(0, 5)
+
+			if(data.feed) {
+				data.feed.items = data.feed.items.slice(0, 5);
+			}
 
 			feeds.push(data);
 		});
