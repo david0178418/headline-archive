@@ -104,7 +104,7 @@ function SiteCard(props: Props) {
 			</Accordion>
 			<Card.Footer>
 				<small className="text-muted">
-					{format(new Date(feed.date), 'PPpp')}
+					{format(new Date(feed.date), 'PPp')}
 				</small>
 			</Card.Footer>
 		</Card>

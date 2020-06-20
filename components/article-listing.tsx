@@ -80,7 +80,7 @@ function ArticleListing({feeds}: Props) {
 				<h2>
 					Headline Archive
 				</h2>
-				<Container>
+				<Container className="mt-0 px-0">
 					<Form.Row>
 						<Form.Group as={Col}>
 							<Form.Label>
@@ -141,7 +141,7 @@ function ArticleListing({feeds}: Props) {
 					</Row>
 					<Row>
 						<Col>
-							<Container fluid>
+							<Container fluid className="px-0">
 								{chunk(feeds, 3).map((rowFeeds, i) => (
 									<ArticleRow
 										key={i}
@@ -155,6 +155,9 @@ function ArticleListing({feeds}: Props) {
 				</Container>
 			</Container>
 			<Loader/>
+			<small>
+				{(new Date()).toString()}
+			</small>
 		</div>
 	);
 }

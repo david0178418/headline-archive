@@ -23,7 +23,7 @@ function ArticleRow(props: Props) {
 	return (
 		<Row>
 			{feeds.map((f, j) => (
-				<Col key={f.key} md={12} lg={4} className="mt-4">
+				<Col key={f.key} md={12} lg={4} className="mt-4 px-0 px-lg-2">
 					<SiteCard
 						feed={f}
 						rowKey={rowKeyStr}
