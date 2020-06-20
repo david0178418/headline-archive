@@ -1,3 +1,4 @@
+// @ts-check
 const puppeteer = require('puppeteer');
 const admin = require('firebase-admin');
 const { sites } = require('./sites');
@@ -13,14 +14,47 @@ async function captureScreenshots(request, response) {
 
 	const page = await browser.newPage();
 
+	await page.setRequestInterception(true);
 	await page.setDefaultNavigationTimeout(0);
 	await page.setViewport({
 		width: 576,
 		height: 1024,
 	});
 
+	function foo() {
+		/**
+		 * @typedef { import ("../interfaces").Site } Site
+		 *
+		 * @type { Site | null }
+		 */
+		let site = null;
+
+		/**
+		 * @typedef { import ("puppeteer").Request } Request
+		 *
+		 * @param { Request } [request]
+		*/
+		function requestHandler(request) {
+			if(request.resourceType() === 'script' && !site?.enableJs) {
+				request.abort();
+			} else {
+				request.continue();
+			}
+		}
+
+		return {
+			setSite: newSite => site = newSite,
+			handler: requestHandler,
+		}
+	}
+
+	const bar = foo();
+
+	page.on('request', bar.handler);
+
 	for(const site of sites) {
 		try {
+			bar.setSite(site);
 			await page.goto(site.pageUrl, {
 				"waitUntil": "networkidle0",
 			});

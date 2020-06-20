@@ -1,3 +1,4 @@
+// @ts-check
 const Parser = require('rss-parser');
 const { sites } = require('./sites');
 const { firestore } = require('firebase-admin');

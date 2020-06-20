@@ -1,11 +1,19 @@
+// @ts-check
+/**
+ * @typedef { import ("../interfaces").Site } Site
+ *
+ * @type { Site[] }
+ */
 exports.sites = [{
 	key: 'cnbc',
 	label: 'CNBC',
 	pageUrl: 'https://www.cnbc.com/',
 	feedUrl: 'https://www.cnbc.com/id/100003114/device/rss/rss.html',
+
 }, {
 	key: 'cnn',
 	label: 'CNN',
+	enableJs: true,
 	pageUrl: 'https://cnn.com',
 	feedUrl: 'http://rss.cnn.com/rss/cnn_topstories.rss',
 }, {
@@ -46,11 +54,13 @@ exports.sites = [{
 }, {
 	key: 'marketwatch',
 	label: 'MarketWatch',
+	enableJs: true,
 	pageUrl: 'https://www.marketwatch.com',
 	feedUrl: 'http://www.marketwatch.com/rss/topstories',
 }, {
 	key: 'msn',
 	label: 'MSN',
+	enableJs: true,
 	pageUrl: 'https://www.msn.com/',
 	feedUrl: 'https://rss.msn.com/',
 }];

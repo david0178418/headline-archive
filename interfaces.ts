@@ -31,3 +31,12 @@ interface Feed {
 	pageUrl: string;
 	screenDir: string;
 }
+
+export
+interface Site {
+	feedUrl?: string;
+	enableJs?: boolean;
+	key: string;
+	label: string;
+	pageUrl: string;
+}
