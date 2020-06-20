@@ -156,7 +156,7 @@ function ArticleListing({feeds}: Props) {
 			</Container>
 			<Loader/>
 			<small>
-				{(new Date()).toString()}
+				{(new Date()).toString()}///{hour}///{pageDate.toString()}///{pageDate.getHours()}
 			</small>
 		</div>
 	);
