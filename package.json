@@ -10,9 +10,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"site": "firebase deploy --only functions:nextjs",
 		"predeploy": "npm run clean && next build",
-		"deploy": "firebase deploy"
+		"deploy:all": "firebase deploy",
+		"deploy": "firebase deploy --only functions:nextjs"
 	},
 	"engines": {
 		"node": "10"
