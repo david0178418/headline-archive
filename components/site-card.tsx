@@ -63,50 +63,52 @@ function SiteCard(props: Props) {
 				open={modalOpen}
 				onClose={() => setModalOpen(false)}
 			/>
-			<Accordion activeKey={expanded ? rowKey : ''}>
-				<Accordion.Toggle
-					as={Card.Header}
-					eventKey={rowKey}
-					onClick={onToggle}
-					className="top-stories-toggle"
-				>
-					Top Stories
-					{expanded ?
-						<ChevronUp/> :
-						<ChevronDown/>
-					}
-				</Accordion.Toggle>
-				<Accordion.Collapse eventKey={rowKey}>
-					<ListGroup variant="flush">
-						{feed.feed.items.map((item, i) => (
-							<ListGroup.Item key={i}>
-								<OverlayTrigger
-									trigger={['focus', 'hover']}
-									placement={last ? 'left' : 'right'}
-									overlay={
-										<Popover id={item.guid}>
-											<Popover.Content>
-												{item.contentSnippet}
-											</Popover.Content>
-										</Popover>
-									}
-								>
-									<div>
-										<a target="__blank" href={item.link}>
-											{item.title}
-										</a>
-									</div>
-								</OverlayTrigger>
-							</ListGroup.Item>
-						))}
-					</ListGroup>
-				</Accordion.Collapse>
-			</Accordion>
 			<Card.Footer>
 				<small className="text-muted">
 					{format(new Date(feed.date), 'PPp')}
 				</small>
 			</Card.Footer>
+			{feed.feed && (
+				<Accordion activeKey={expanded ? rowKey : ''}>
+					<Accordion.Toggle
+						as={Card.Header}
+						eventKey={rowKey}
+						onClick={onToggle}
+						className="top-stories-toggle"
+					>
+						Top Stories
+						{expanded ?
+							<ChevronUp/> :
+							<ChevronDown/>
+						}
+					</Accordion.Toggle>
+					<Accordion.Collapse eventKey={rowKey}>
+						<ListGroup variant="flush">
+							{feed.feed.items.map((item, i) => (
+								<ListGroup.Item key={i}>
+									<OverlayTrigger
+										trigger={['focus', 'hover']}
+										placement={last ? 'left' : 'right'}
+										overlay={
+											<Popover id={item.guid}>
+												<Popover.Content>
+													{item.contentSnippet}
+												</Popover.Content>
+											</Popover>
+										}
+									>
+										<div>
+											<a target="__blank" href={item.link}>
+												{item.title}
+											</a>
+										</div>
+									</OverlayTrigger>
+								</ListGroup.Item>
+							))}
+						</ListGroup>
+					</Accordion.Collapse>
+				</Accordion>
+			)}
 		</Card>
 	);
 }

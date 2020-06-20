@@ -14,7 +14,7 @@ interface Feed {
 	key: string;
 	label: string;
 	date: string;
-	feed: {
+	feed?: {
 		items: Article[];
 		description: string;
 		image: {

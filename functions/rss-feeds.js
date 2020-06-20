@@ -17,11 +17,14 @@ async function collectRssFeeds() {
 	const feedRef = f.collection('feeds');
 	for(const site of sites) {
 		try {
+			const feed = site.feedUrl ?
+				await parser.parseURL(site.feedUrl):
+				null;
 			batch.create(feedRef.doc(), {
 				...site,
 				date: date.toISOString(),
 				screenDir,
-				feed: await parser.parseURL(site.feedUrl),
+				feed,
 			});
 		} catch(e) {
 			console.error(`Failed to gather feed "${site.key}"`, e);

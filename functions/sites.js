@@ -22,6 +22,11 @@ exports.sites = [{
 	pageUrl: 'https://www.foxnews.com/',
 	feedUrl: 'http://feeds.foxnews.com/foxnews/latest',
 }, {
+	key: 'msnbc',
+	label: 'MSNBC',
+	pageUrl: 'https://www.msnbc.com/',
+	enableJs: true,
+}, {
 	key: 'huffpost',
 	label: 'HuffPost',
 	pageUrl: 'https://www.huffpost.com/',
