@@ -10,6 +10,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
+		"site": "firebase deploy --only functions:nextjs",
 		"predeploy": "npm run clean && next build",
 		"deploy": "firebase deploy"
 	},

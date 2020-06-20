@@ -24,8 +24,33 @@ exports.sites = [{
 	pageUrl: 'https://www.nytimes.com/',
 	feedUrl: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
 }, {
+	key: 'nypost',
+	label: 'New York Post',
+	pageUrl: 'https://nypost.com/',
+	feedUrl: 'https://nypost.com/news/feed/',
+}, {
+	key: 'drudgereport',
+	label: 'Drudge Report',
+	pageUrl: 'https://drudgereport.com/',
+	feedUrl: 'https://feedpress.me/drudgereportfeed',
+}, {
 	key: 'reddit',
 	label: 'Reddit',
 	pageUrl: 'https://www.reddit.com/',
 	feedUrl: 'https://www.reddit.com/.rss',
+}, {
+	key: 'google-news',
+	label: 'Google News',
+	pageUrl: 'https://news.google.com',
+	feedUrl: 'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en',
+}, {
+	key: 'marketwatch',
+	label: 'MarketWatch',
+	pageUrl: 'https://www.marketwatch.com',
+	feedUrl: 'http://www.marketwatch.com/rss/topstories',
+}, {
+	key: 'msn',
+	label: 'MSN',
+	pageUrl: 'https://www.msn.com/',
+	feedUrl: 'https://rss.msn.com/',
 }];
