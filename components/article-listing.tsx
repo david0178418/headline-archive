@@ -15,6 +15,9 @@ import { Loader } from '@components/loader';
 import { useState, useEffect } from 'react';
 import { format, isSameDay, endOfHour } from 'date-fns';
 import Link from 'next/link';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+
+const CUTOFF = 'Wed Jun 17 2020 12:00:00 GMT-0500 (Central Daylight Time)';
 
 interface Props {
 	feeds: Feed[];
@@ -32,6 +35,10 @@ function ArticleListing({feeds}: Props) {
 	);
 
 	useEffect(() => {
+		// setTimestamp(timestamp);
+	}, []);
+
+	useEffect(() => {
 			setTimestamp(getUrlParam());
 	}, [router.query.datetime]);
 
@@ -39,17 +46,14 @@ function ArticleListing({feeds}: Props) {
 		const urlParam = router.query.datetime as string;
 		return Date.parse(urlParam) ?
 			urlParam :
-			(endOfHour(new Date())).toISOString()
+			(endOfHour(new Date())).toISOString();
 	}
 
-	function getStamp() {
-		const targetDate = new Date(timestamp);
-		targetDate.setHours(hour);
-		targetDate.setMinutes(59);
-		targetDate.setSeconds(0);
-		targetDate.setMilliseconds(0);
+	function getSelectedTimestamp() {
+		const newDate = endOfHour(date);
+		newDate.setHours(hour);
 
-		return targetDate.toISOString();
+		return newDate.toISOString();
 	}
 
 	return (
@@ -86,12 +90,22 @@ function ArticleListing({feeds}: Props) {
 							<Form.Label>
 								Date
 							</Form.Label>
-							<Form.Control
-								type="date"
-								min="2020-06-17"
-								max={format(new Date(), 'yyyy-MM-dd')}
-								value={format(date, 'yyyy-MM-dd')}
-								onChange={e => setDate((e.target as any).valueAsDate)}
+							<DayPickerInput
+								format="LL"
+								value={date}
+								dayPickerProps={{
+									disabledDays: { 
+										before: new Date(CUTOFF), 
+										after: new Date(),
+									}
+								}}
+								onDayChange={setDate}
+								formatDate={date => format(date, 'PP')}
+								classNames={{
+									container: 'DayPickerInput form-control',
+									overlayWrapper: 'DayPickerInput-OverlayWrapper',
+									overlay: 'DayPickerInput-Overlay',
+								}}
 							/>
 						</Form.Group>
 						<Form.Group as={Col}>
@@ -132,7 +146,7 @@ function ArticleListing({feeds}: Props) {
 					</Form.Row>
 					<Row>
 						<Col>
-							<Link href="/archive/[datetime]" as={`/archive/${encodeURIComponent(getStamp())}`}>
+							<Link href="/archive/[datetime]" as={`/archive/${getSelectedTimestamp()}`}>
 								<Button block disabled={isSame}>
 									Go
 								</Button>
@@ -155,9 +169,6 @@ function ArticleListing({feeds}: Props) {
 				</Container>
 			</Container>
 			<Loader/>
-			<small>
-				{(new Date()).toString()}///{hour}///{pageDate.toString()}///{pageDate.getHours()}
-			</small>
 		</div>
 	);
 }
