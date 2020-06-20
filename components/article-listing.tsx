@@ -35,12 +35,16 @@ function ArticleListing({feeds}: Props) {
 	);
 
 	useEffect(() => {
-		// setTimestamp(timestamp);
-	}, []);
-
-	useEffect(() => {
-			setTimestamp(getUrlParam());
+		resetPage();
 	}, [router.query.datetime]);
+
+	function resetPage() {
+		const newTimestamp = getUrlParam();
+		setTimestamp(newTimestamp);
+		const newPageDate = new Date(newTimestamp);
+		setDate(newPageDate);
+		setHour(newPageDate.getHours());
+	}
 
 	function getUrlParam() {
 		const urlParam = router.query.datetime as string;
@@ -75,7 +79,7 @@ function ArticleListing({feeds}: Props) {
 							Archive
 						</Breadcrumb.Item>
 						<Breadcrumb.Item href={`/archive/${encodeURIComponent(timestamp)}`}>
-							{format(pageDate, 'PP, haaaa')}
+							{format(pageDate, 'PP, h aaaa')}
 						</Breadcrumb.Item>
 					</>
 				)}
@@ -146,7 +150,7 @@ function ArticleListing({feeds}: Props) {
 					</Form.Row>
 					<Row>
 						<Col>
-							<Link href="/archive/[datetime]" as={`/archive/${getSelectedTimestamp()}`}>
+							<Link href="/archive/[datetime]" as={`/archive/${encodeURIComponent(getSelectedTimestamp())}`}>
 								<Button block disabled={isSame}>
 									Go
 								</Button>
