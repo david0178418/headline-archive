@@ -11,8 +11,9 @@ import { useRouter } from 'next/router';
 import { Feed } from 'interfaces';
 import { chunk } from 'helpers/utils';
 import { ArticleRow } from '@components/article-row';
-import { useState } from 'react';
-import { format } from 'date-fns';
+import { Loader } from '@components/loader';
+import { useState, useEffect } from 'react';
+import { format, isSameDay, endOfHour } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -22,13 +23,24 @@ interface Props {
 export
 function ArticleListing({feeds}: Props) {
 	const router = useRouter();
-	const urlParam = router.query.datetime as string;
-	const timestamp = Date.parse(urlParam) ?
-		urlParam :
-		(new Date()).toISOString();
+	const [timestamp, setTimestamp] = useState(getUrlParam);
 	const pageDate = new Date(timestamp);
 	const [date, setDate] = useState(pageDate);
 	const [hour, setHour] = useState(pageDate.getHours());
+	const isSame = isSameDay(pageDate, date) && (
+		hour === pageDate.getHours()
+	);
+
+	useEffect(() => {
+			setTimestamp(getUrlParam());
+	}, [router.query.datetime]);
+
+	function getUrlParam() {
+		const urlParam = router.query.datetime as string;
+		return Date.parse(urlParam) ?
+			urlParam :
+			(endOfHour(new Date())).toISOString()
+	}
 
 	function getStamp() {
 		const targetDate = new Date(timestamp);
@@ -53,12 +65,12 @@ function ArticleListing({feeds}: Props) {
 				<Breadcrumb.Item href="/">
 					Home
 				</Breadcrumb.Item>
-				{urlParam && (
+				{router.query.datetime && (
 					<>
 						<Breadcrumb.Item active>
 							Archive
 						</Breadcrumb.Item>
-						<Breadcrumb.Item href={`/archive/${timestamp}`}>
+						<Breadcrumb.Item href={`/archive/${encodeURIComponent(timestamp)}`}>
 							{format(pageDate, 'PP, haaaa')}
 						</Breadcrumb.Item>
 					</>
@@ -86,7 +98,11 @@ function ArticleListing({feeds}: Props) {
 							<Form.Label>
 								Hour
 							</Form.Label>
-							<Form.Control as="select" value={hour} onChange={e => setHour(e.target.value)}>
+							<Form.Control
+								as="select"
+								value={hour}
+								onChange={e => setHour(+e.target.value)}
+							>
 								<option value={0}>12 am</option>
 								<option value={1}>1 am</option>
 								<option value={2}>2 am</option>
@@ -116,8 +132,8 @@ function ArticleListing({feeds}: Props) {
 					</Form.Row>
 					<Row>
 						<Col>
-							<Link href="/archive/[datetime]" as={`/archive/${getStamp()}`}>
-								<Button block>
+							<Link href="/archive/[datetime]" as={`/archive/${encodeURIComponent(getStamp())}`}>
+								<Button block disabled={isSame}>
 									Go
 								</Button>
 							</Link>
@@ -138,6 +154,7 @@ function ArticleListing({feeds}: Props) {
 					</Row>
 				</Container>
 			</Container>
+			<Loader/>
 		</div>
 	);
 }
