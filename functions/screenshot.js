@@ -35,7 +35,7 @@ async function captureScreenshots(request, response) {
 		 * @param { Request } [request]
 		*/
 		function requestHandler(request) {
-			if(request.resourceType() === 'script' && !site?.enableJs) {
+			if(request.resourceType() === 'script' && site && !site.enableJs) {
 				request.abort();
 			} else {
 				request.continue();
@@ -55,6 +55,7 @@ async function captureScreenshots(request, response) {
 	for(const site of sites) {
 		try {
 			bar.setSite(site);
+
 			await page.goto(site.pageUrl, {
 				"waitUntil": "networkidle0",
 			});
@@ -66,6 +67,14 @@ async function captureScreenshots(request, response) {
 			await page._client.send('ServiceWorker.enable');
 			//@ts-ignore
 			await page._client.send('ServiceWorker.stopAllWorkers');
+
+			if(site.scrollTo) {
+				await page.evaluate(() => {
+					const targetEl = document.querySelector(site.scrollTo);
+					targetEl && targetEl.scrollIntoView();
+				});
+			}
+
 			const imageBuffer = await page.screenshot();
 
 			await saveScreenShot(`${dir}/${site.key}.png`, imageBuffer);

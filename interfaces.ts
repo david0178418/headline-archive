@@ -34,9 +34,10 @@ interface Feed {
 
 export
 interface Site {
-	feedUrl?: string;
 	enableJs?: boolean;
+	feedUrl?: string;
 	key: string;
 	label: string;
 	pageUrl: string;
+	scrollTo?: string
 }

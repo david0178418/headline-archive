@@ -29,6 +29,7 @@ exports.sites = [{
 }, {
 	key: 'nytimes',
 	label: 'New York Times',
+	scrollTo: '.NYTAppHideMasthead',
 	pageUrl: 'https://www.nytimes.com/',
 	feedUrl: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
 }, {
