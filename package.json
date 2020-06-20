@@ -12,7 +12,7 @@
 		"start": "next start",
 		"predeploy": "npm run clean && next build",
 		"deploy:all": "firebase deploy",
-		"deploy": "firebase deploy --only functions:nextjs"
+		"deploy": "firebase deploy --only functions:nextjs-server"
 	},
 	"engines": {
 		"node": "10"
