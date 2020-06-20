@@ -69,17 +69,30 @@ async function captureScreenshots(request, response) {
 			await page._client.send('ServiceWorker.stopAllWorkers');
 
 			if(site.scrollTo) {
-				await page.evaluate(() => {
-					const targetEl = document.querySelector(site.scrollTo);
-					targetEl && targetEl.scrollIntoView();
-				});
+				console.log(`Scrolling to ${site.scrollTo}`);
+				try {
+					await page.evaluate(() => {
+						const targetEl = document.querySelector(site.scrollTo);
+	
+						if(targetEl) {
+							console.log(`Element ${site.scrollTo} found`);
+							targetEl.scrollIntoView();
+							console.log(`Finished scrolling to ${site.scrollTo}`);
+						} else {
+							console.error(`Could not find element ${site.scrollTo}`);
+						}
+					});
+				} catch(e) {
+					console.error(`Error scrolling to ${site.scrollTo} on site ${site.label}`);
+				}
+				console.log(`Finished scrolling to ${site.scrollTo}`);
 			}
 
 			const imageBuffer = await page.screenshot();
 
 			await saveScreenShot(`${dir}/${site.key}.png`, imageBuffer);
 		} catch(e) {
-			console.error(`Error capturing site "${site}"`);
+			console.error(`Error capturing site "${site.label}"`, JSON.stringify(e));
 		}
 	}
 
