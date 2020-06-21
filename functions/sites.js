@@ -25,6 +25,7 @@ exports.sites = [{
 	key: 'msnbc',
 	label: 'MSNBC',
 	pageUrl: 'https://www.msnbc.com/',
+	feedUrl: 'http://www.msnbc.com/feeds/latest',
 	enableJs: true,
 }, {
 	key: 'huffpost',
@@ -69,4 +70,9 @@ exports.sites = [{
 	enableJs: true,
 	pageUrl: 'https://www.msn.com/',
 	feedUrl: 'https://rss.msn.com/',
+}, {
+	key: 'twitter',
+	label: 'Twitter',
+	enableJs: true,
+	pageUrl: 'https://twitter.com/explore/tabs/trending',
 }];
