@@ -20,8 +20,9 @@ async function captureScreenshots(request, response) {
 	await page.setRequestInterception(true);
 	await page.setDefaultNavigationTimeout(0);
 	await page.setViewport({
-		width: 576,
-		height: 1024,
+		width: 432,
+		height: 768,
+		isMobile: true,
 	});
 
 	function foo() {

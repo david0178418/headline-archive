@@ -33,6 +33,9 @@ interface Feed {
 }
 
 export
+type BiasLabel = 'left' | 'right' | 'center';
+
+export
 interface Site {
 	enableJs?: boolean;
 	feedUrl?: string;
@@ -40,4 +43,6 @@ interface Site {
 	label: string;
 	pageUrl: string;
 	scrollTo?: string
+	bias: BiasLabel;
+	biasUrl: string;
 }
