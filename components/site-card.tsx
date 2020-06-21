@@ -50,6 +50,21 @@ function SiteCard(props: Props) {
 					</a>
 				</Card.Title>
 			</Card.Body>
+
+			{feed.bias && feed.biasUrl && (
+				<Card.Footer>
+					<small className="text-muted float-right">
+						AllSides Lean Rating:
+						<a
+							href={feed.biasUrl}
+							target="__blank"
+							className="capitalize"
+						>
+							{feed.bias}
+						</a>
+					</small>
+				</Card.Footer>
+			)}
 			<Card.Img
 				variant="top"
 				className="card-screenshot"

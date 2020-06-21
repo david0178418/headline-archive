@@ -10,9 +10,7 @@ interface Article {
 }
 
 export
-interface Feed {
-	key: string;
-	label: string;
+interface Feed extends Site {
 	date: string;
 	feed?: {
 		items: Article[];
@@ -27,8 +25,6 @@ interface Feed {
 		lastBuildDate: string;
 		pubDate: string;
 	};
-	feedUrl: string;
-	pageUrl: string;
 	screenDir: string;
 }
 
@@ -43,6 +39,6 @@ interface Site {
 	label: string;
 	pageUrl: string;
 	scrollTo?: string
-	bias: BiasLabel;
-	biasUrl: string;
+	bias?: BiasLabel;
+	biasUrl?: string;
 }
