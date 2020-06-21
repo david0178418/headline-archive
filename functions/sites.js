@@ -70,9 +70,4 @@ exports.sites = [{
 	enableJs: true,
 	pageUrl: 'https://www.msn.com/',
 	feedUrl: 'https://rss.msn.com/',
-}, {
-	key: 'twitter',
-	label: 'Twitter',
-	enableJs: true,
-	pageUrl: 'https://mobile.twitter.com/explore/tabs/trending',
 }];

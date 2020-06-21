@@ -21,8 +21,13 @@ const handle = app.getRequestHandler();
 const server = functions.https.onRequest((request, response) => {
 	// log the page.js file or resource being requested
 	console.log("File: " + request.originalUrl);
+	response.set(
+		'Cache-Control', 'public, max-age=600',
+	);
 	return app.prepare().then(() => handle(request, response));
 });
+
+const CRON_TIMING = '5 */4 * * *';
 
 exports.nextjs = { server };
 
@@ -74,7 +79,7 @@ exports.scheduledScreenshots = functions
 		memory: '2GB',
 	})
 	.pubsub
-	.schedule('5 * * * *')
+	.schedule(CRON_TIMING)
 	.timeZone('America/Chicago')
 	.onRun(captureScreenshots);
 
@@ -83,6 +88,6 @@ exports.scheduledRssFeeds = functions
 		timeoutSeconds: 300,
 	})
 	.pubsub
-	.schedule('5 * * * *')
+	.schedule(CRON_TIMING)
 	.timeZone('America/Chicago')
 	.onRun(collectRssFeeds);

@@ -22,7 +22,7 @@ class MyDocument extends Document {
 										function gtag(){dataLayer.push(arguments);}
 										gtag('js', new Date());
 										gtag('config', 'UA-7940406-3');
-									}`
+									`
 								}}
 							/>
 						</>
