@@ -9,7 +9,10 @@ async function captureScreenshots(request, response) {
 	console.log('starting');
 
 	const dir = `screenshots/${format(new Date(), 'yyyy/MM/dd/HH')}`;
-	const browser = await puppeteer.launch({args: ['--no-sandbox']});
+	const browser = await puppeteer.launch({
+		headless: true,
+		args: ['--no-sandbox'],
+	});
 	console.log('browser initialized');
 
 	const page = await browser.newPage();
