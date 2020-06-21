@@ -74,5 +74,5 @@ exports.sites = [{
 	key: 'twitter',
 	label: 'Twitter',
 	enableJs: true,
-	pageUrl: 'https://twitter.com/explore/tabs/trending',
+	pageUrl: 'https://mobile.twitter.com/explore/tabs/trending',
 }];
