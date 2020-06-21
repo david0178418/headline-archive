@@ -60,7 +60,7 @@ async function captureScreenshots(request, response) {
 				"waitUntil": "networkidle0",
 			});
 		
-			console.log('page opened');
+			console.log(`${site.pageUrl} opened`);
 		
 			// Disable service workers
 			//@ts-ignore
@@ -71,19 +71,15 @@ async function captureScreenshots(request, response) {
 			if(site.scrollTo) {
 				console.log(`Scrolling to ${site.scrollTo}`);
 				try {
-					await page.evaluate(() => {
-						const targetEl = document.querySelector(site.scrollTo);
-	
-						if(targetEl) {
-							console.log(`Element ${site.scrollTo} found`);
-							targetEl.scrollIntoView();
-							console.log(`Finished scrolling to ${site.scrollTo}`);
-						} else {
-							console.error(`Could not find element ${site.scrollTo}`);
-						}
-					});
+					const targetElHandle = await page.$(site.scrollTo);
+
+					await page.evaluate(targetEl => {
+						targetEl && targetEl.scrollIntoView();
+					}, targetElHandle);
+
+					await targetElHandle.dispose();
 				} catch(e) {
-					console.error(`Error scrolling to ${site.scrollTo} on site ${site.label}`);
+					console.error(`Error scrolling to ${site.scrollTo} on site ${site.pageUrl}`, e);
 				}
 				console.log(`Finished scrolling to ${site.scrollTo}`);
 			}
