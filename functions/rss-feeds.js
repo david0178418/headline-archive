@@ -20,11 +20,12 @@ async function collectRssFeeds() {
 			const feed = site.feedUrl ?
 				await parser.parseURL(site.feedUrl):
 				null;
+
 			batch.create(feedRef.doc(), {
 				...site,
 				date: date.toISOString(),
 				screenDir,
-				feed,
+				feed: JSON.parse(JSON.stringify(feed)),
 			});
 		} catch(e) {
 			console.error(`Failed to gather feed "${site.key}"`, e);
