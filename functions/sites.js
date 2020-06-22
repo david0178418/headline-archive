@@ -109,13 +109,13 @@ exports.sites = [{
 	bias: Bias.Left,
 	biasUrl: 'https://www.allsides.com/news-source/new-york-times',
 }, {
-	key: 'politico',
-	label: 'Politico',
-	pageUrl: 'https://www.politico.com/',
-	feedUrl: 'https://rss.politico.com/headlines.xml',
+	key: 'slate',
+	label: 'Slate',
+	pageUrl: 'https://slate.com/',
+	feedUrl: 'https://slate.com/feeds/all.rss',
 	bias: Bias.Left,
 	enableJs: true,
-	biasUrl: 'https://www.allsides.com/news-source/politico-media-bias',
+	biasUrl: 'https://www.allsides.com/news-source/slate',
 }, {
 	key: 'reason',
 	label: 'Reason',
@@ -137,6 +137,14 @@ exports.sites = [{
 	feedUrl: 'https://www.vox.com/rss/index.xml',
 	bias: Bias.Left,
 	biasUrl: 'https://www.allsides.com/news-source/vox-news-media-bias',
+}, {
+	key: 'wallstreetjournal',
+	label: 'Wall Street Journal',
+	pageUrl: 'https://www.wsj.com/',
+	feedUrl: 'https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml',
+	bias: Bias.Center,
+	enableJs: true,
+	biasUrl: 'https://www.allsides.com/news-source/wall-street-journal-media-bias',
 }, {
 	key: 'washingtontimes',
 	label: 'Washington Times',
