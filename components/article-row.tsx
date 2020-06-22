@@ -1,5 +1,4 @@
 import {
-	Row,
 	Col,
 } from 'react-bootstrap';
 import { useState } from 'react';
@@ -21,9 +20,9 @@ function ArticleRow(props: Props) {
 	const rowKeyStr = `key-${rowKey}`;
 
 	return (
-		<Row>
+		<>
 			{feeds.map((f, j) => (
-				<Col key={f.key} md={12} lg={4} className="mt-4 px-0 px-lg-2">
+				<Col key={f.key} sm={12} md={6} lg={4} className="mt-4 px-0 px-md-2">
 					<SiteCard
 						feed={f}
 						rowKey={rowKeyStr}
@@ -33,6 +32,6 @@ function ArticleRow(props: Props) {
 					/>
 				</Col>
 			))}
-		</Row>
+		</>
 	);
 }

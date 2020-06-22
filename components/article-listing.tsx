@@ -157,18 +157,14 @@ function ArticleListing({feeds}: Props) {
 							</Link>
 						</Col>
 					</Row>
-					<Row>
-						<Col>
-							<Container fluid className="px-0">
-								{chunk(feeds, 3).map((rowFeeds, i) => (
-									<ArticleRow
-										key={i}
-										rowKey={i}
-										feeds={rowFeeds}
-									/>
-								))}
-							</Container>
-						</Col>
+					<Row className="px-0">
+						{chunk(feeds, 3).map((rowFeeds, i) => (
+							<ArticleRow
+								key={i}
+								rowKey={i}
+								feeds={rowFeeds}
+							/>
+						))}
 					</Row>
 				</Container>
 			</Container>
