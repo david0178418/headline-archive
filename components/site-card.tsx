@@ -8,6 +8,10 @@ import {
 import {
 	ChevronDown,
 	ChevronUp,
+	ArrowLeftCircleFill,
+	CircleFill,
+	ArrowRightCircleFill,
+	Link45deg,
 } from 'react-bootstrap-icons';
 import { useState } from 'react';
 import { Feed } from 'interfaces';
@@ -54,13 +58,23 @@ function SiteCard(props: Props) {
 			{feed.bias && feed.biasUrl && (
 				<Card.Footer>
 					<small className="text-muted float-right">
-						AllSides Lean Rating:
 						<a
 							href={feed.biasUrl}
 							target="__blank"
 							className="capitalize"
 						>
-							{feed.bias}
+							{'AllSides Lean Rating: '}
+							<Link45deg/>
+
+							{feed.bias === 'left' && (
+								<ArrowLeftCircleFill color="blue" size={24} />
+							)}
+							{feed.bias === 'center' && (
+								<CircleFill color="purple" size={24} />
+							)}
+							{feed.bias === 'right' && (
+								<ArrowRightCircleFill color="red" size={24} />
+							)}
 						</a>
 					</small>
 				</Card.Footer>
