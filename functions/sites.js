@@ -136,6 +136,7 @@ exports.sites = [{
 	pageUrl: 'https://www.vox.com/',
 	feedUrl: 'https://www.vox.com/rss/index.xml',
 	bias: Bias.Left,
+	enableJs: true,
 	biasUrl: 'https://www.allsides.com/news-source/vox-news-media-bias',
 }, {
 	key: 'wallstreetjournal',
