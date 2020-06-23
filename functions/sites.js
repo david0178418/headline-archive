@@ -121,6 +121,7 @@ exports.sites = [{
 	label: 'Reason',
 	pageUrl: 'https://reason.com/',
 	feedUrl: 'https://reason.com/feed/',
+	scrollTo: 'main.main',
 	bias: Bias.Right,
 	biasUrl: 'https://www.allsides.com/news-source/reason',
 }, {
@@ -135,6 +136,7 @@ exports.sites = [{
 	label: 'Vox',
 	pageUrl: 'https://www.vox.com/',
 	feedUrl: 'https://www.vox.com/rss/index.xml',
+	scrollTo: '#content',
 	bias: Bias.Left,
 	enableJs: true,
 	biasUrl: 'https://www.allsides.com/news-source/vox-news-media-bias',

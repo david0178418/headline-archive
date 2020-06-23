@@ -109,11 +109,13 @@ function SiteCard(props: Props) {
 						onClick={onToggle}
 						className="top-stories-toggle"
 					>
-						Top Stories
-						{expanded ?
-							<ChevronUp/> :
-							<ChevronDown/>
-						}
+						<strong>
+							Top Stories
+							{expanded ?
+								<ChevronUp/> :
+								<ChevronDown/>
+							}
+						</strong>
 					</Accordion.Toggle>
 					<Accordion.Collapse eventKey={rowKey}>
 						<ListGroup variant="flush">
