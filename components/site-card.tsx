@@ -64,17 +64,21 @@ function SiteCard(props: Props) {
 							className="capitalize"
 						>
 							{'AllSides Lean Rating: '}
+							<span className={`color-${feed.bias}`}>
+								{feed.bias === 'left' && (
+									<ArrowLeftCircleFill size={24} />
+								)}
+								{feed.bias === 'center' && (
+									<CircleFill size={24} />
+								)}
+								{feed.bias === 'right' && (
+									<ArrowRightCircleFill size={24} />
+								)}
+								<span className="capilize">
+									{` ${feed.bias}`}
+								</span>
+							</span>
 							<Link45deg/>
-
-							{feed.bias === 'left' && (
-								<ArrowLeftCircleFill color="blue" size={24} />
-							)}
-							{feed.bias === 'center' && (
-								<CircleFill color="purple" size={24} />
-							)}
-							{feed.bias === 'right' && (
-								<ArrowRightCircleFill color="red" size={24} />
-							)}
 						</a>
 					</small>
 				</Card.Footer>
