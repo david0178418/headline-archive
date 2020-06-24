@@ -47,9 +47,7 @@ function ArticleListing({feeds}: Props) {
 	);
 	let {
 		lean = '',
-	} = router.query;
-
-	console.log(hour);
+	} = router.query;;
 
 	lean = (
 		Object.values(SourceLeaning).includes(lean as SourceLeaning) ?
@@ -74,7 +72,6 @@ function ArticleListing({feeds}: Props) {
 
 	function resetPage() {
 		const newTimestamp = getUrlParam();
-		console.log(newTimestamp);
 		setTimestamp(newTimestamp);
 		const newPageDate = new Date(newTimestamp);
 		setDate(newPageDate);
