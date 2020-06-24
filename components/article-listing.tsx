@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import clsx from 'clsx';
 import {
 	Container,
 	Form,
@@ -14,10 +16,16 @@ import { ArticleRow } from '@components/article-row';
 import { Loader } from '@components/loader';
 import { useState, useEffect } from 'react';
 import { format, isSameDay, endOfHour } from 'date-fns';
-import Link from 'next/link';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 
 const CUTOFF = 'Wed Jun 17 2020 12:00:00 GMT-0500 (Central Daylight Time)';
+
+enum SourceLeaning {
+	All = 'all',
+	Left = 'left',
+	Center = 'center',
+	Right = 'right',
+}
 
 interface Props {
 	feeds: Feed[];
@@ -33,6 +41,26 @@ function ArticleListing({feeds}: Props) {
 	const isSame = isSameDay(pageDate, date) && (
 		hour === pageDate.getHours()
 	);
+	let {
+		lean = '',
+	} = router.query;
+
+	lean = (
+		Object.values(SourceLeaning).includes(lean as SourceLeaning) ?
+			lean :
+			SourceLeaning.All
+		) as string;
+
+	const selectedFeeds = feeds
+		.filter(f => (
+			lean === SourceLeaning.All ||
+			lean === f.bias
+		));
+	const allCount = feeds.length;
+	const leftCount = feeds.filter(f => f.bias === 'left').length;
+	const centerCount = feeds.filter(f => f.bias === 'center').length;
+	const rightCount = feeds.filter(f => f.bias === 'right').length;
+	const rootPath = router.asPath.split('?')[0];
 
 	useEffect(() => {
 		resetPage();
@@ -132,15 +160,112 @@ function ArticleListing({feeds}: Props) {
 					</Form.Row>
 					<Row>
 						<Col>
-							<Link href="/archive/[datetime]" as={`/archive/${encodeURIComponent(getSelectedTimestamp())}`}>
+							<Link
+								prefetch={false}
+								href="/archive/[datetime]"
+								as={`/archive/${encodeURIComponent(getSelectedTimestamp())}`}
+							>
 								<Button block disabled={isSame}>
 									Go
 								</Button>
 							</Link>
 						</Col>
 					</Row>
+
+					<Row className="mt-4">
+						<Col>
+							<ul className="nav nav-tabs">
+								<li className="nav-item">
+									<Link
+										shallow
+										prefetch={false}
+										href={router.pathname}
+										as={rootPath}
+									>
+										<a className={clsx('nav-link', {
+											active: lean === SourceLeaning.All,
+										})}>
+											All Sources ({allCount})
+										</a>
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link
+										shallow
+										prefetch={false}
+										href={{
+											pathname: router.pathname,
+											query: {
+												lean: SourceLeaning.Left,
+											}
+										}}
+										as={{
+											pathname: rootPath,
+											query: {
+												lean: SourceLeaning.Left,
+											}
+										}}
+									>
+										<a className={clsx('nav-link', {
+											active: lean === SourceLeaning.Left,
+										})}>
+											Left Leaning Sources ({leftCount})
+										</a>
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link
+										shallow
+										prefetch={false}
+										href={{
+											pathname: router.pathname,
+											query: {
+												lean: SourceLeaning.Center,
+											}
+										}}
+										as={{
+											pathname: rootPath,
+											query: {
+												lean: SourceLeaning.Center,
+											}
+										}}
+									>
+										<a className={clsx('nav-link', {
+											active: lean === SourceLeaning.Center,
+										})}>
+											Center Sources ({centerCount})
+										</a>
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link
+										shallow
+										prefetch={false}
+										href={{
+											pathname: router.pathname,
+											query: {
+												lean: SourceLeaning.Right,
+											}
+										}}
+										as={{
+											pathname: rootPath,
+											query: {
+												lean: SourceLeaning.Right,
+											}
+										}}
+									>
+										<a className={clsx('nav-link', {
+											active: lean === SourceLeaning.Right,
+										})}>
+											Right Leaning Sources ({rightCount})
+										</a>
+									</Link>
+								</li>
+							</ul>
+						</Col>
+					</Row>
 					<Row className="px-0">
-						{chunk(feeds, 3).map((rowFeeds, i) => (
+						{chunk(selectedFeeds, 3).map((rowFeeds, i) => (
 							<ArticleRow
 								key={i}
 								rowKey={i}
