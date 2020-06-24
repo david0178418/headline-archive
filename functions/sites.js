@@ -53,7 +53,7 @@ exports.sites = [{
 	key: 'foxnews',
 	label: 'Fox News',
 	pageUrl: 'https://www.foxnews.com/',
-	feedUrl: 'http://feeds.foxnews.com/foxnews/latest',
+	feedUrl: 'http://feeds.foxnews.com/foxnews/national',
 	bias: Bias.Right,
 	biasUrl: 'https://www.allsides.com/news-source/fox-news-media-bias',
 }, {
