@@ -1,8 +1,6 @@
 import {
 	Card,
 	ListGroup,
-	OverlayTrigger,
-	Popover,
 	Accordion,
 } from 'react-bootstrap';
 import {
@@ -38,7 +36,6 @@ function SiteCard(props: Props) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const {
 		feed,
-		last,
 		rowKey,
 		expanded,
 		onToggle,
@@ -121,23 +118,16 @@ function SiteCard(props: Props) {
 						<ListGroup variant="flush">
 							{feed.feed.items.map((item, i) => (
 								<ListGroup.Item key={i}>
-									<OverlayTrigger
-										trigger={['focus', 'hover']}
-										placement={last ? 'left' : 'right'}
-										overlay={
-											<Popover id={item.guid}>
-												<Popover.Content>
-													{item.contentSnippet}
-												</Popover.Content>
-											</Popover>
-										}
-									>
-										<div>
-											<a target="__blank" href={item.link}>
-												{item.title}
-											</a>
-										</div>
-									</OverlayTrigger>
+									<div>
+										<a target="__blank" href={item.link}>
+											{item.title}
+										</a>
+										{item.contentSnippet && (
+											<p>
+												<em>Preview:</em> <span dangerouslySetInnerHTML={{__html: item.contentSnippet}} />
+											</p>
+										)}
+									</div>
 								</ListGroup.Item>
 							))}
 						</ListGroup>
