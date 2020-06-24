@@ -97,7 +97,7 @@ exports.sites = [{
 	key: 'nypost',
 	label: 'New York Post',
 	pageUrl: 'https://nypost.com/',
-	feedUrl: 'https://nypost.com/news/feed/',
+	feedUrl: 'https://nypost.com/feed/',
 	bias: Bias.Right,
 	biasUrl: 'https://www.allsides.com/news-source/new-york-post',
 }, {
