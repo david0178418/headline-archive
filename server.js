@@ -27,8 +27,6 @@ const server = functions.https.onRequest((request, response) => {
 	return app.prepare().then(() => handle(request, response));
 });
 
-const CRON_TIMING = '5 */4 * * *';
-
 exports.nextjs = { server };
 
 exports.takeScreenshot = functions
@@ -79,7 +77,7 @@ exports.scheduledScreenshots = functions
 		memory: '2GB',
 	})
 	.pubsub
-	.schedule(CRON_TIMING)
+	.schedule('1 */4 * * *')
 	.timeZone('America/Chicago')
 	.onRun(captureScreenshots);
 
@@ -88,6 +86,6 @@ exports.scheduledRssFeeds = functions
 		timeoutSeconds: 300,
 	})
 	.pubsub
-	.schedule(CRON_TIMING)
+	.schedule('3 */4 * * *')
 	.timeZone('America/Chicago')
 	.onRun(collectRssFeeds);

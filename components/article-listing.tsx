@@ -169,7 +169,11 @@ function ArticleListing({feeds}: Props) {
 								href="/archive/[datetime]"
 								as={`/archive/${encodeURIComponent(getSelectedTimestamp())}`}
 							>
-								<Button block disabled={isSame}>
+								<Button
+									block
+									variant="secondary"
+									disabled={isSame}
+								>
 									Go
 								</Button>
 							</Link>
