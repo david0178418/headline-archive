@@ -27,6 +27,10 @@ enum SourceLeaning {
 	Right = 'right',
 }
 
+function nearestHour(h: number) {
+	return h - h % 4;
+}
+
 interface Props {
 	feeds: Feed[];
 }
@@ -37,13 +41,15 @@ function ArticleListing({feeds}: Props) {
 	const [timestamp, setTimestamp] = useState(getUrlParam);
 	const pageDate = new Date(timestamp);
 	const [date, setDate] = useState(pageDate);
-	const [hour, setHour] = useState(pageDate.getHours());
+	const [hour, setHour] = useState(() => nearestHour(pageDate.getHours()));
 	const isSame = isSameDay(pageDate, date) && (
-		hour === pageDate.getHours()
+		hour === nearestHour(pageDate.getHours())
 	);
 	let {
 		lean = '',
 	} = router.query;
+
+	console.log(hour);
 
 	lean = (
 		Object.values(SourceLeaning).includes(lean as SourceLeaning) ?
@@ -68,10 +74,11 @@ function ArticleListing({feeds}: Props) {
 
 	function resetPage() {
 		const newTimestamp = getUrlParam();
+		console.log(newTimestamp);
 		setTimestamp(newTimestamp);
 		const newPageDate = new Date(newTimestamp);
 		setDate(newPageDate);
-		setHour(newPageDate.getHours());
+		setHour(nearestHour(newPageDate.getHours()));
 	}
 
 	function getUrlParam() {
@@ -149,12 +156,12 @@ function ArticleListing({feeds}: Props) {
 								value={hour}
 								onChange={e => setHour(+e.target.value)}
 							>
-								<option value={1}>1 am</option>
-								<option value={5}>5 am</option>
-								<option value={9}>9 am</option>
-								<option value={13}>1 pm</option>
-								<option value={17}>5 pm</option>
-								<option value={21}>9 pm</option>
+								<option value={12}>12 am</option>
+								<option value={4}>4 am</option>
+								<option value={8}>8 am</option>
+								<option value={12}>12 pm</option>
+								<option value={16}>4 pm</option>
+								<option value={20}>8 pm</option>
 							</Form.Control>
 						</Form.Group>
 					</Form.Row>
@@ -174,22 +181,19 @@ function ArticleListing({feeds}: Props) {
 
 					<Row className="mt-4">
 						<Col>
-							<ul className="nav nav-tabs">
-								<li className="nav-item">
+							<nav className="nav nav-pills flex-column flex-sm-row">
 									<Link
 										shallow
 										prefetch={false}
 										href={router.pathname}
 										as={rootPath}
 									>
-										<a className={clsx('nav-link', {
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 											active: lean === SourceLeaning.All,
 										})}>
 											All Sources ({allCount})
 										</a>
 									</Link>
-								</li>
-								<li className="nav-item">
 									<Link
 										shallow
 										prefetch={false}
@@ -206,14 +210,12 @@ function ArticleListing({feeds}: Props) {
 											}
 										}}
 									>
-										<a className={clsx('nav-link', {
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 											active: lean === SourceLeaning.Left,
 										})}>
 											Left Leaning Sources ({leftCount})
 										</a>
 									</Link>
-								</li>
-								<li className="nav-item">
 									<Link
 										shallow
 										prefetch={false}
@@ -230,14 +232,12 @@ function ArticleListing({feeds}: Props) {
 											}
 										}}
 									>
-										<a className={clsx('nav-link', {
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 											active: lean === SourceLeaning.Center,
 										})}>
 											Center Sources ({centerCount})
 										</a>
 									</Link>
-								</li>
-								<li className="nav-item">
 									<Link
 										shallow
 										prefetch={false}
@@ -254,14 +254,13 @@ function ArticleListing({feeds}: Props) {
 											}
 										}}
 									>
-										<a className={clsx('nav-link', {
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 											active: lean === SourceLeaning.Right,
 										})}>
 											Right Leaning Sources ({rightCount})
 										</a>
 									</Link>
-								</li>
-							</ul>
+							</nav>
 						</Col>
 					</Row>
 					<Row className="px-0">
