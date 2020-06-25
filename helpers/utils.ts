@@ -18,3 +18,13 @@ function chunk<T>(list: T[], size: number) {
 			(_,i) => list.slice(i*size,i*size+size)
 		);
 }
+
+export
+function notNull<TValue>(value: TValue | null | undefined): value is TValue {
+    return value !== null && value !== undefined;
+}
+
+export
+function notFalsy<TValue>(value: TValue | null | undefined): value is TValue {
+    return !!value;
+}

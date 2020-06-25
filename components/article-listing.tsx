@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import clsx from 'clsx';
 import {
 	Container,
@@ -17,6 +18,10 @@ import { Loader } from '@components/loader';
 import { useState, useEffect } from 'react';
 import { format, isSameDay, endOfHour } from 'date-fns';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+
+const TopWords = dynamic(() => import('../components/top-words'), {
+	ssr: false
+});
 
 const CUTOFF = 'Wed Jun 17 2020 12:00:00 GMT-0500 (Central Daylight Time)';
 
@@ -67,6 +72,7 @@ function ArticleListing({feeds}: Props) {
 	const rootPath = router.asPath.split('?')[0];
 
 	useEffect(() => {
+		console.log(feeds);
 		resetPage();
 	}, [router.query.datetime]);
 
@@ -264,6 +270,8 @@ function ArticleListing({feeds}: Props) {
 							</nav>
 						</Col>
 					</Row>
+
+					<TopWords feeds={selectedFeeds} />
 					<Row className="px-0">
 						{chunk(selectedFeeds, 3).map((rowFeeds, i) => (
 							<ArticleRow
