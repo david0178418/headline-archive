@@ -92,7 +92,7 @@ function ArticleListing({feeds}: Props) {
 	}
 
 	function getSelectedTimestamp() {
-		const newDate = endOfHour(date);
+		const newDate = endOfHour(date || new Date());
 		newDate.setHours(hour);
 
 		return newDate.toISOString();
