@@ -47,7 +47,7 @@ function SiteCard(props: Props) {
 			<Card.Body>
 				<Card.Title>
 					<a href={feed.pageUrl} target="__blank">
-						{feed.label}
+						{feed.label} {feed.satire ? '(satire)' : ''}
 					</a>
 				</Card.Title>
 			</Card.Body>

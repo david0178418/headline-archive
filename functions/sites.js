@@ -155,4 +155,20 @@ exports.sites = [{
 	feedUrl: 'https://www.washingtontimes.com/rss/headlines/',
 	bias: Bias.Right,
 	biasUrl: 'https://www.allsides.com/news-source/washington-times-bias',
+}, {
+	key: 'babylonbee',
+	satire: true,
+	label: 'The Babylon Bee',
+	pageUrl: 'https://babylonbee.com/',
+	feedUrl: 'https://babylonbee.com/feed',
+	bias: Bias.Right,
+	biasUrl: 'https://www.allsides.com/news-source/babylon-bee-media-bias',
+}, {
+	key: 'theonion',
+	satire: true,
+	label: 'The Onion',
+	pageUrl: 'https://www.theonion.com/',
+	feedUrl: 'https://www.theonion.com/rss',
+	bias: Bias.Left,
+	biasUrl: 'https://www.allsides.com/news-source/onion-media-bias',
 }];

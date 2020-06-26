@@ -38,7 +38,8 @@ interface Site {
 	key: string;
 	label: string;
 	pageUrl: string;
-	scrollTo?: string
+	satire?: boolean;
+	scrollTo?: string;
 	bias?: BiasLabel;
 	biasUrl?: string;
 }
