@@ -10,7 +10,6 @@ async function captureScreenshots(request, response) {
 
 	const dir = `screenshots/${format(new Date(), 'yyyy/MM/dd/HH')}`;
 	const browser = await puppeteer.launch({
-		headless: true,
 		args: ['--no-sandbox'],
 	});
 	console.log('browser initialized');
@@ -18,7 +17,7 @@ async function captureScreenshots(request, response) {
 	const page = await browser.newPage();
 
 	await page.setRequestInterception(true);
-	await page.setDefaultNavigationTimeout(0);
+	await page.setDefaultNavigationTimeout(10000);
 	await page.setViewport({
 		width: 432,
 		height: 768,
@@ -60,6 +59,8 @@ async function captureScreenshots(request, response) {
 		try {
 			bar.setSite(site);
 
+			console.log(`${site.pageUrl} opening`);
+
 			await page.goto(site.pageUrl, {
 				"waitUntil": "networkidle0",
 			});
@@ -90,6 +91,7 @@ async function captureScreenshots(request, response) {
 
 			const imageBuffer = await page.screenshot();
 
+			console.log(`Saveing screenshot to ${dir}/${site.key}.png`)
 			await saveScreenShot(`${dir}/${site.key}.png`, imageBuffer);
 		} catch(e) {
 			console.error(`Error capturing site "${site.label}"`, JSON.stringify(e));
