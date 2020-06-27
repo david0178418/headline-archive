@@ -123,3 +123,5 @@ temp/
 # End of https://www.gitignore.io/api/node,firebase
 
 *key.json
+
+.directory
