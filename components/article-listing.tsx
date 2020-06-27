@@ -168,7 +168,7 @@ function ArticleListing({feeds}: Props) {
 								value={hour}
 								onChange={e => setHour(+e.target.value)}
 							>
-								<option value={12}>12 am</option>
+								<option value={0}>12 am</option>
 								<option value={4}>4 am</option>
 								<option value={8}>8 am</option>
 								<option value={12}>12 pm</option>
