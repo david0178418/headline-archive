@@ -123,7 +123,7 @@ function ArticleListing({feeds}: Props) {
 			</Breadcrumb>
 			<Container>
 				<Row>
-					<Col className="heading-logo-container">
+					<Col className="heading-logo-container mb-4">
 						<div className="heading-logo-image-container">
 							<img src="/logo-horizontal.png"/>
 							<div className="beta-marker">
