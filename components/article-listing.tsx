@@ -72,7 +72,6 @@ function ArticleListing({feeds}: Props) {
 	const rootPath = router.asPath.split('?')[0];
 
 	useEffect(() => {
-		console.log(feeds);
 		resetPage();
 	}, [router.query.datetime]);
 
@@ -102,7 +101,7 @@ function ArticleListing({feeds}: Props) {
 		<div>
 			<Head>
 				<title>
-					Headline Archive
+					FullView News (beta)
 				</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
@@ -124,8 +123,12 @@ function ArticleListing({feeds}: Props) {
 			</Breadcrumb>
 			<Container>
 				<h2>
-					Headline Archive
+					FullView News
 				</h2>
+				<p>
+					<small><em>beta</em></small><br/>
+					Aggregating and archiving news from both sides of the aisle.
+				</p>
 				<Container className="mt-0 px-0">
 					<Form.Row>
 						<Form.Group as={Col}>
