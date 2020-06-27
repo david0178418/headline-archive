@@ -122,11 +122,17 @@ function ArticleListing({feeds}: Props) {
 				)}
 			</Breadcrumb>
 			<Container>
-				<h2>
-					FullView News
-				</h2>
+				<Row>
+					<Col className="heading-logo-container">
+						<div className="heading-logo-image-container">
+							<img src="/logo-horizontal.png"/>
+							<div className="beta-marker">
+								<small><em>beta</em></small>
+							</div>
+						</div>
+					</Col>
+				</Row>
 				<p>
-					<small><em>beta</em></small><br/>
 					Aggregating and archiving news from both sides of the aisle.
 				</p>
 				<Container className="mt-0 px-0">

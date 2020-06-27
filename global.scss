@@ -49,3 +49,22 @@
 .capitalize {
 	text-transform: capitalize;
 }
+
+
+.heading-logo-container {
+	text-align: center;
+
+	& img {
+		max-width: 100%;
+	}
+	
+	.heading-logo-image-container {
+		display: inline-block;
+		position: relative;
+		& .beta-marker {
+			bottom: 0;
+			right: 0;
+			position: absolute;
+		}
+	}
+}
