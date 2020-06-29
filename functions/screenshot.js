@@ -31,6 +31,24 @@ async function captureScreenshots(request, response) {
 		isMobile: true,
 	});
 
+	const bar = foo();
+
+	page.on('request', bar.handler);
+
+	// TODO Clean this mess up.
+	const retries = [];
+
+	for(const site of sites) {
+		await processSite(site);
+	}
+
+	for(const site of sites) {
+		await processSite(site, false);
+	}
+
+	console.log('generated screenshots');
+	await browser.close();
+
 	function foo() {
 		/**
 		 * @typedef { import ("../interfaces").Site } Site
@@ -58,11 +76,14 @@ async function captureScreenshots(request, response) {
 		}
 	}
 
-	const bar = foo();
+	/**
+	 * @typedef { import ("../interfaces").Site } Site
+	 *
+	 * @param { Site } [site]
+	 * @param { boolean } [retry]
+	*/
+	async function processSite(site, retry = true) {
 
-	page.on('request', bar.handler);
-
-	for(const site of sites) {
 		try {
 			bar.setSite(site);
 
@@ -96,19 +117,17 @@ async function captureScreenshots(request, response) {
 				console.log(`Finished scrolling to ${site.scrollTo}`);
 			}
 
-			await page.waitFor(site.wait || 1000);
+			await page.waitFor(site.wait || 250);
 
 			const imageBuffer = await page.screenshot();
 
 			console.log(`Saving screenshot to ${dir}/${site.key}.png`)
 			await saveScreenShot(`${dir}/${site.key}.png`, imageBuffer);
 		} catch(e) {
+			retry && retries.push(site);
 			console.error(`Error capturing site "${site.label}"`, JSON.stringify(e));
 		}
 	}
-
-	console.log('generated screenshot');
-	await browser.close();
 }
 
 async function saveScreenShot(path, imageBuffer) {
