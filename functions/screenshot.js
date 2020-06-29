@@ -1,5 +1,8 @@
 // @ts-check
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra').default;
+const stealth = require('puppeteer-extra-plugin-stealth');
+const adBlock = require('puppeteer-extra-plugin-adblocker').default;
+const anonymizeUa = require('puppeteer-extra-plugin-anonymize-ua');
 const admin = require('firebase-admin');
 const { sites } = require('./sites');
 const { format } = require('date-fns');
@@ -7,6 +10,10 @@ const { format } = require('date-fns');
 exports.captureScreenshots =
 async function captureScreenshots(request, response) {
 	console.log('starting');
+
+	puppeteer.use(stealth());
+	puppeteer.use(adBlock());
+	puppeteer.use(anonymizeUa());
 
 	const dir = `screenshots/${format(new Date(), 'yyyy/MM/dd/HH')}`;
 	const browser = await puppeteer.launch({
@@ -39,9 +46,9 @@ async function captureScreenshots(request, response) {
 		*/
 		function requestHandler(request) {
 			if(request.resourceType() === 'script' && site && !site.enableJs) {
-				request.abort();
+				request.abort().catch(() => {});
 			} else {
-				request.continue();
+				request.continue().catch(() => {});
 			}
 		}
 
@@ -62,7 +69,7 @@ async function captureScreenshots(request, response) {
 			console.log(`${site.pageUrl} opening`);
 
 			await page.goto(site.pageUrl, {
-				"waitUntil": "networkidle0",
+				waitUntil: "networkidle2",
 			});
 		
 			console.log(`${site.pageUrl} opened`);
@@ -89,9 +96,11 @@ async function captureScreenshots(request, response) {
 				console.log(`Finished scrolling to ${site.scrollTo}`);
 			}
 
+			await page.waitFor(site.wait || 1000);
+
 			const imageBuffer = await page.screenshot();
 
-			console.log(`Saveing screenshot to ${dir}/${site.key}.png`)
+			console.log(`Saving screenshot to ${dir}/${site.key}.png`)
 			await saveScreenShot(`${dir}/${site.key}.png`, imageBuffer);
 		} catch(e) {
 			console.error(`Error capturing site "${site.label}"`, JSON.stringify(e));

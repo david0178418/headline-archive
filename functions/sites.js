@@ -70,6 +70,7 @@ exports.sites = [{
 	feedUrl: 'https://thehill.com/rss/syndicator/19110',
 	bias: Bias.Center,
 	biasUrl: 'https://www.allsides.com/news-source/hill-media-bias',
+	wait: 30000,
 }, {
 	key: 'huffpost',
 	label: 'HuffPost',
@@ -137,8 +138,8 @@ exports.sites = [{
 	pageUrl: 'https://www.vox.com/',
 	feedUrl: 'https://www.vox.com/rss/index.xml',
 	scrollTo: '#content',
+	wait: 3000,
 	bias: Bias.Left,
-	enableJs: true,
 	biasUrl: 'https://www.allsides.com/news-source/vox-news-media-bias',
 }, {
 	key: 'wallstreetjournal',

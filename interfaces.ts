@@ -42,4 +42,5 @@ interface Site {
 	scrollTo?: string;
 	bias?: BiasLabel;
 	biasUrl?: string;
+	wait?: number;
 }
