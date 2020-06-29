@@ -116,6 +116,7 @@ exports.sites = [{
 	feedUrl: 'https://slate.com/feeds/all.rss',
 	bias: Bias.Left,
 	enableJs: true,
+	wait: 1,
 	biasUrl: 'https://www.allsides.com/news-source/slate',
 }, {
 	key: 'reason',
