@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import clsx from 'clsx';
 import {
 	Container,
-	Form,
 	Col,
 	Button,
 	Row,
@@ -46,13 +45,11 @@ function ArticleListing({feeds}: Props) {
 	const [timestamp, setTimestamp] = useState(getUrlParam);
 	const pageDate = new Date(timestamp);
 	const [date, setDate] = useState(pageDate);
-	const [hour, setHour] = useState(() => nearestHour(pageDate.getHours()));
-	const isSame = isSameDay(pageDate, date) && (
-		hour === nearestHour(pageDate.getHours())
-	);
+	const hour = nearestHour(pageDate.getHours());
+	const isSame = isSameDay(pageDate, date);
 	let {
 		lean = '',
-	} = router.query;;
+	} = router.query;
 
 	lean = (
 		Object.values(SourceLeaning).includes(lean as SourceLeaning) ?
@@ -80,7 +77,6 @@ function ArticleListing({feeds}: Props) {
 		setTimestamp(newTimestamp);
 		const newPageDate = new Date(newTimestamp);
 		setDate(newPageDate);
-		setHour(nearestHour(newPageDate.getHours()));
 	}
 
 	function getUrlParam() {
@@ -90,9 +86,9 @@ function ArticleListing({feeds}: Props) {
 			(endOfHour(new Date())).toISOString();
 	}
 
-	function getSelectedTimestamp() {
+	function getSelectedTimestamp(newHour: number) {
 		const newDate = endOfHour(date || new Date());
-		newDate.setHours(hour);
+		newDate.setHours(newHour);
 
 		return newDate.toISOString();
 	}
@@ -136,19 +132,25 @@ function ArticleListing({feeds}: Props) {
 					Aggregating and archiving news from both sides of the aisle.
 				</p>
 				<Container className="mt-0 px-0">
-					<Form.Row>
-						<Form.Group as={Col}>
-							<Form.Label>
-								Date
-							</Form.Label>
+					<Row>
+						<Col
+							sm={{
+								span: 4,
+								offset: 3,
+							}}
+							lg={{
+								span: 3,
+								offset: 4,
+							}}
+						>
 							<DayPickerInput
 								format="LL"
 								value={date}
 								dayPickerProps={{
-									disabledDays: { 
+									disabledDays: {
 										before: new Date(CUTOFF), 
 										after: new Date(),
-									}
+									},
 								}}
 								onDayChange={setDate}
 								formatDate={date => format(date, 'PP')}
@@ -158,31 +160,15 @@ function ArticleListing({feeds}: Props) {
 									overlay: 'DayPickerInput-Overlay',
 								}}
 							/>
-						</Form.Group>
-						<Form.Group as={Col}>
-							<Form.Label>
-								Hour
-							</Form.Label>
-							<Form.Control
-								as="select"
-								value={hour}
-								onChange={e => setHour(+e.target.value)}
-							>
-								<option value={0}>12 am</option>
-								<option value={4}>4 am</option>
-								<option value={8}>8 am</option>
-								<option value={12}>12 pm</option>
-								<option value={16}>4 pm</option>
-								<option value={20}>8 pm</option>
-							</Form.Control>
-						</Form.Group>
-					</Form.Row>
-					<Row>
-						<Col>
+						</Col>
+						<Col
+							sm={2}
+							lg={1}
+						>
 							<Link
 								prefetch={false}
 								href="/archive/[datetime]"
-								as={`/archive/${encodeURIComponent(getSelectedTimestamp())}`}
+								as={`/archive/${encodeURIComponent(getSelectedTimestamp(hour))}`}
 							>
 								<Button
 									block
@@ -192,6 +178,85 @@ function ArticleListing({feeds}: Props) {
 									Go
 								</Button>
 							</Link>
+						</Col>
+					</Row>
+
+					<Row className="mt-4">
+						<Col>
+							<nav className="nav nav-tabs flex-column flex-sm-row">
+								<Link
+									shallow
+									prefetch={false}
+									href="/archive/[datetime]"
+									as={`/archive/${encodeURIComponent(getSelectedTimestamp(0))}`}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: hour === 0,
+									})}>
+										12 am
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href="/archive/[datetime]"
+									as={`/archive/${encodeURIComponent(getSelectedTimestamp(4))}`}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: hour === 4,
+									})}>
+										4 am
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href="/archive/[datetime]"
+									as={`/archive/${encodeURIComponent(getSelectedTimestamp(8))}`}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: hour === 8,
+									})}>
+										8 am
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href="/archive/[datetime]"
+									as={`/archive/${encodeURIComponent(getSelectedTimestamp(12))}`}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: hour === 12,
+									})}>
+										12 pm
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href="/archive/[datetime]"
+									as={`/archive/${encodeURIComponent(getSelectedTimestamp(16))}`}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: hour === 16,
+									})}>
+										4 pm
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href="/archive/[datetime]"
+									as={`/archive/${encodeURIComponent(getSelectedTimestamp(20))}`}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: hour === 20,
+									})}>
+										8 pm
+									</a>
+								</Link>
+							</nav>
 						</Col>
 					</Row>
 
