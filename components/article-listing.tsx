@@ -103,19 +103,21 @@ function ArticleListing({feeds}: Props) {
 			</Head>
 
 			<Breadcrumb>
-				<Breadcrumb.Item href="/">
-					Home
-				</Breadcrumb.Item>
-				{router.query.datetime && (
-					<>
-						<Breadcrumb.Item active>
-							Archive
-						</Breadcrumb.Item>
-						<Breadcrumb.Item href={`/archive/${encodeURIComponent(timestamp)}`}>
-							{format(pageDate, 'PP, h aaaa')}
-						</Breadcrumb.Item>
-					</>
-				)}
+				<Container>
+					<Breadcrumb.Item href="/">
+						Home
+					</Breadcrumb.Item>
+					{router.query.datetime && (
+						<>
+							<Breadcrumb.Item active>
+								Archive
+							</Breadcrumb.Item>
+							<Breadcrumb.Item href={`/archive/${encodeURIComponent(timestamp)}`}>
+								{format(pageDate, 'PP, h aaaa')}
+							</Breadcrumb.Item>
+						</>
+					)}
+				</Container>
 			</Breadcrumb>
 			<Container>
 				<Row>
