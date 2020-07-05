@@ -209,73 +209,73 @@ function ArticleListing({feeds}: Props) {
 										})}>
 											All ({allCount})
 										</a>
-									</Link>
-									<Link
-										shallow
-										prefetch={false}
-										href={{
-											pathname: router.pathname,
-											query: {
-												lean: SourceLeaning.Left,
-											}
-										}}
-										as={{
-											pathname: rootPath,
-											query: {
-												lean: SourceLeaning.Left,
-											}
-										}}
-									>
-										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-											active: lean === SourceLeaning.Left,
-										})}>
-											Left Leaning Sources ({leftCount})
-										</a>
-									</Link>
-									<Link
-										shallow
-										prefetch={false}
-										href={{
-											pathname: router.pathname,
-											query: {
-												lean: SourceLeaning.Center,
-											}
-										}}
-										as={{
-											pathname: rootPath,
-											query: {
-												lean: SourceLeaning.Center,
-											}
-										}}
-									>
-										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-											active: lean === SourceLeaning.Center,
-										})}>
-											Center Sources ({centerCount})
-										</a>
-									</Link>
-									<Link
-										shallow
-										prefetch={false}
-										href={{
-											pathname: router.pathname,
-											query: {
-												lean: SourceLeaning.Right,
-											}
-										}}
-										as={{
-											pathname: rootPath,
-											query: {
-												lean: SourceLeaning.Right,
-											}
-										}}
-									>
-										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-											active: lean === SourceLeaning.Right,
-										})}>
-											Right Leaning Sources ({rightCount})
-										</a>
-									</Link>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href={{
+										pathname: router.pathname,
+										query: {
+											lean: SourceLeaning.Left,
+										}
+									}}
+									as={{
+										pathname: rootPath,
+										query: {
+											lean: SourceLeaning.Left,
+										}
+									}}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: lean === SourceLeaning.Left,
+									})}>
+										Left Leaning Sources ({leftCount})
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href={{
+										pathname: router.pathname,
+										query: {
+											lean: SourceLeaning.Center,
+										}
+									}}
+									as={{
+										pathname: rootPath,
+										query: {
+											lean: SourceLeaning.Center,
+										}
+									}}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: lean === SourceLeaning.Center,
+									})}>
+										Center Sources ({centerCount})
+									</a>
+								</Link>
+								<Link
+									shallow
+									prefetch={false}
+									href={{
+										pathname: router.pathname,
+										query: {
+											lean: SourceLeaning.Right,
+										}
+									}}
+									as={{
+										pathname: rootPath,
+										query: {
+											lean: SourceLeaning.Right,
+										}
+									}}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: lean === SourceLeaning.Right,
+									})}>
+										Right Leaning Sources ({rightCount})
+									</a>
+								</Link>
 							</nav>
 						</Col>
 					</Row>
