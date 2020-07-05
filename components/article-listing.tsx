@@ -93,6 +93,12 @@ function ArticleListing({feeds}: Props) {
 		return newDate.toISOString();
 	}
 
+	const tabQuery: any = {};
+
+	if(lean !== SourceLeaning.All) {
+		tabQuery.lean = lean;
+	}
+
 	return (
 		<div>
 			<Head>
@@ -102,23 +108,21 @@ function ArticleListing({feeds}: Props) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<Breadcrumb>
-				<Container>
-					<Breadcrumb.Item href="/">
-						Home
-					</Breadcrumb.Item>
-					{router.query.datetime && (
-						<>
-							<Breadcrumb.Item active>
-								Archive
-							</Breadcrumb.Item>
-							<Breadcrumb.Item href={`/archive/${encodeURIComponent(timestamp)}`}>
-								{format(pageDate, 'PP, h aaaa')}
-							</Breadcrumb.Item>
-						</>
-					)}
-				</Container>
-			</Breadcrumb>
+			<Container as={Breadcrumb}>
+				<Breadcrumb.Item href="/">
+					Home
+				</Breadcrumb.Item>
+				{router.query.datetime && (
+					<>
+						<Breadcrumb.Item active>
+							Archive
+						</Breadcrumb.Item>
+						<Breadcrumb.Item href={`/archive/${encodeURIComponent(timestamp)}`}>
+							{format(pageDate, 'PP, h aaaa')}
+						</Breadcrumb.Item>
+					</>
+				)}
+			</Container>
 			<Container>
 				<Row>
 					<Col className="heading-logo-container mb-4">
@@ -187,10 +191,16 @@ function ArticleListing({feeds}: Props) {
 						<Col>
 							<nav className="nav nav-tabs flex-column flex-sm-row">
 								<Link
-									shallow
+									scroll={false}
 									prefetch={false}
-									href="/archive/[datetime]"
-									as={`/archive/${encodeURIComponent(getSelectedTimestamp(0))}`}
+									href={{
+										pathname: "/archive/[datetime]",
+										query: tabQuery,
+									}}
+									as={{
+										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(0))}`,
+										query: tabQuery,
+									}}
 								>
 									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 										active: hour === 0,
@@ -199,10 +209,16 @@ function ArticleListing({feeds}: Props) {
 									</a>
 								</Link>
 								<Link
-									shallow
+									scroll={false}
 									prefetch={false}
-									href="/archive/[datetime]"
-									as={`/archive/${encodeURIComponent(getSelectedTimestamp(4))}`}
+									href={{
+										pathname: "/archive/[datetime]",
+										query: tabQuery,
+									}}
+									as={{
+										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(4))}`,
+										query: tabQuery,
+									}}
 								>
 									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 										active: hour === 4,
@@ -211,10 +227,16 @@ function ArticleListing({feeds}: Props) {
 									</a>
 								</Link>
 								<Link
-									shallow
+									scroll={false}
 									prefetch={false}
-									href="/archive/[datetime]"
-									as={`/archive/${encodeURIComponent(getSelectedTimestamp(8))}`}
+									href={{
+										pathname: "/archive/[datetime]",
+										query: tabQuery,
+									}}
+									as={{
+										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(8))}`,
+										query: tabQuery,
+									}}
 								>
 									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 										active: hour === 8,
@@ -223,10 +245,16 @@ function ArticleListing({feeds}: Props) {
 									</a>
 								</Link>
 								<Link
-									shallow
+									scroll={false}
 									prefetch={false}
-									href="/archive/[datetime]"
-									as={`/archive/${encodeURIComponent(getSelectedTimestamp(12))}`}
+									href={{
+										pathname: "/archive/[datetime]",
+										query: tabQuery,
+									}}
+									as={{
+										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(12))}`,
+										query: tabQuery,
+									}}
 								>
 									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 										active: hour === 12,
@@ -235,10 +263,16 @@ function ArticleListing({feeds}: Props) {
 									</a>
 								</Link>
 								<Link
-									shallow
+									scroll={false}
 									prefetch={false}
-									href="/archive/[datetime]"
-									as={`/archive/${encodeURIComponent(getSelectedTimestamp(16))}`}
+									href={{
+										pathname: "/archive/[datetime]",
+										query: tabQuery,
+									}}
+									as={{
+										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(16))}`,
+										query: tabQuery,
+									}}
 								>
 									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 										active: hour === 16,
@@ -247,10 +281,16 @@ function ArticleListing({feeds}: Props) {
 									</a>
 								</Link>
 								<Link
-									shallow
+									scroll={false}
 									prefetch={false}
-									href="/archive/[datetime]"
-									as={`/archive/${encodeURIComponent(getSelectedTimestamp(20))}`}
+									href={{
+										pathname: "/archive/[datetime]",
+										query: tabQuery,
+									}}
+									as={{
+										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(20))}`,
+										query: tabQuery,
+									}}
 								>
 									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
 										active: hour === 20,
@@ -267,6 +307,7 @@ function ArticleListing({feeds}: Props) {
 							<nav className="nav nav-pills flex-column flex-sm-row">
 								<Link
 									shallow
+									scroll={false}
 									prefetch={false}
 									href={router.pathname}
 									as={rootPath}
@@ -279,6 +320,7 @@ function ArticleListing({feeds}: Props) {
 								</Link>
 								<Link
 									shallow
+									scroll={false}
 									prefetch={false}
 									href={{
 										pathname: router.pathname,
@@ -301,6 +343,7 @@ function ArticleListing({feeds}: Props) {
 								</Link>
 								<Link
 									shallow
+									scroll={false}
 									prefetch={false}
 									href={{
 										pathname: router.pathname,
@@ -323,6 +366,7 @@ function ArticleListing({feeds}: Props) {
 								</Link>
 								<Link
 									shallow
+									scroll={false}
 									prefetch={false}
 									href={{
 										pathname: router.pathname,

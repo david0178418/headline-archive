@@ -1,3 +1,8 @@
+$theme-colors: (
+	"primary": #3A627B,
+	"secondary": #CC3C3C
+);
+
 @import "~bootstrap/scss/bootstrap";
 @import "~react-day-picker/lib/style.css";
 
