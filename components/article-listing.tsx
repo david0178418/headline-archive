@@ -198,17 +198,17 @@ function ArticleListing({feeds}: Props) {
 					<Row className="mt-4">
 						<Col>
 							<nav className="nav nav-pills flex-column flex-sm-row">
-									<Link
-										shallow
-										prefetch={false}
-										href={router.pathname}
-										as={rootPath}
-									>
-										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-											active: lean === SourceLeaning.All,
-										})}>
-											All ({allCount})
-										</a>
+								<Link
+									shallow
+									prefetch={false}
+									href={router.pathname}
+									as={rootPath}
+								>
+									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+										active: lean === SourceLeaning.All,
+									})}>
+										All ({allCount})
+									</a>
 								</Link>
 								<Link
 									shallow
