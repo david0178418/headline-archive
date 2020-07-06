@@ -190,116 +190,118 @@ function ArticleListing({feeds}: Props) {
 
 					<Row className="mt-4">
 						<Col>
-							<nav className="nav nav-tabs flex-column flex-sm-row">
-								<Link
-									scroll={false}
-									prefetch={false}
-									href={{
-										pathname: "/archive/[datetime]",
-										query: tabQuery,
-									}}
-									as={{
-										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(0))}`,
-										query: tabQuery,
-									}}
-								>
-									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-										active: hour === 0,
-									})}>
-										12 am
-									</a>
-								</Link>
-								<Link
-									scroll={false}
-									prefetch={false}
-									href={{
-										pathname: "/archive/[datetime]",
-										query: tabQuery,
-									}}
-									as={{
-										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(4))}`,
-										query: tabQuery,
-									}}
-								>
-									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-										active: hour === 4,
-									})}>
-										4 am
-									</a>
-								</Link>
-								<Link
-									scroll={false}
-									prefetch={false}
-									href={{
-										pathname: "/archive/[datetime]",
-										query: tabQuery,
-									}}
-									as={{
-										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(8))}`,
-										query: tabQuery,
-									}}
-								>
-									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-										active: hour === 8,
-									})}>
-										8 am
-									</a>
-								</Link>
-								<Link
-									scroll={false}
-									prefetch={false}
-									href={{
-										pathname: "/archive/[datetime]",
-										query: tabQuery,
-									}}
-									as={{
-										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(12))}`,
-										query: tabQuery,
-									}}
-								>
-									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-										active: hour === 12,
-									})}>
-										12 pm
-									</a>
-								</Link>
-								<Link
-									scroll={false}
-									prefetch={false}
-									href={{
-										pathname: "/archive/[datetime]",
-										query: tabQuery,
-									}}
-									as={{
-										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(16))}`,
-										query: tabQuery,
-									}}
-								>
-									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-										active: hour === 16,
-									})}>
-										4 pm
-									</a>
-								</Link>
-								<Link
-									scroll={false}
-									prefetch={false}
-									href={{
-										pathname: "/archive/[datetime]",
-										query: tabQuery,
-									}}
-									as={{
-										pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(20))}`,
-										query: tabQuery,
-									}}
-								>
-									<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
-										active: hour === 20,
-									})}>
-										8 pm
-									</a>
-								</Link>
-							</nav>
+							{process.browser && (
+								<nav className="nav nav-tabs flex-column flex-sm-row">
+									<Link
+										scroll={false}
+										prefetch={false}
+										href={{
+											pathname: "/archive/[datetime]",
+											query: tabQuery,
+										}}
+										as={{
+											pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(0))}`,
+											query: tabQuery,
+										}}
+									>
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+											active: hour === 0,
+										})}>
+											12 am
+										</a>
+									</Link>
+									<Link
+										scroll={false}
+										prefetch={false}
+										href={{
+											pathname: "/archive/[datetime]",
+											query: tabQuery,
+										}}
+										as={{
+											pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(4))}`,
+											query: tabQuery,
+										}}
+									>
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+											active: hour === 4,
+										})}>
+											4 am
+										</a>
+									</Link>
+									<Link
+										scroll={false}
+										prefetch={false}
+										href={{
+											pathname: "/archive/[datetime]",
+											query: tabQuery,
+										}}
+										as={{
+											pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(8))}`,
+											query: tabQuery,
+										}}
+									>
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+											active: hour === 8,
+										})}>
+											8 am
+										</a>
+									</Link>
+									<Link
+										scroll={false}
+										prefetch={false}
+										href={{
+											pathname: "/archive/[datetime]",
+											query: tabQuery,
+										}}
+										as={{
+											pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(12))}`,
+											query: tabQuery,
+										}}
+									>
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+											active: hour === 12,
+										})}>
+											12 pm
+										</a>
+									</Link>
+									<Link
+										scroll={false}
+										prefetch={false}
+										href={{
+											pathname: "/archive/[datetime]",
+											query: tabQuery,
+										}}
+										as={{
+											pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(16))}`,
+											query: tabQuery,
+										}}
+									>
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+											active: hour === 16,
+										})}>
+											4 pm
+										</a>
+									</Link>
+									<Link
+										scroll={false}
+										prefetch={false}
+										href={{
+											pathname: "/archive/[datetime]",
+											query: tabQuery,
+										}}
+										as={{
+											pathname: `/archive/${encodeURIComponent(getSelectedTimestamp(20))}`,
+											query: tabQuery,
+										}}
+									>
+										<a className={clsx('nav-link nav-item flex-sm-fill text-sm-center', {
+											active: hour === 20,
+										})}>
+											8 pm
+										</a>
+									</Link>
+								</nav>
+							)}
 						</Col>
 					</Row>
 
