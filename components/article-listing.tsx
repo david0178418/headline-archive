@@ -45,7 +45,7 @@ function ArticleListing({feeds}: Props) {
 	const [timestamp, setTimestamp] = useState(getUrlParam);
 	const pageDate = new Date(timestamp);
 	const [date, setDate] = useState(pageDate);
-	const hour = nearestHour(pageDate.getHours());
+	const [hour, setHours] = useState(() => nearestHour(pageDate.getHours()));
 	const isSame = isSameDay(pageDate, date);
 	let {
 		lean = '',
@@ -76,6 +76,7 @@ function ArticleListing({feeds}: Props) {
 		const newTimestamp = getUrlParam();
 		setTimestamp(newTimestamp);
 		const newPageDate = new Date(newTimestamp);
+		setHours(nearestHour(newPageDate.getHours()));
 		setDate(newPageDate);
 	}
 
