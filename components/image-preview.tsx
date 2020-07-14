@@ -36,7 +36,12 @@ function ImagePreview(props: Props) {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Image src={img} fluid rounded />
+					<Image
+						fluid
+						rounded
+						loading="lazy"
+						src={img}
+					/>
 				</Modal.Body>
 			</Modal>
 		</>
