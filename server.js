@@ -77,7 +77,7 @@ exports.scheduledScreenshots = functions
 		memory: '2GB',
 	})
 	.pubsub
-	.schedule('1 */4 * * *')
+	.schedule('1 */8 * * *')
 	.timeZone('America/Chicago')
 	.onRun(captureScreenshots);
 
@@ -86,6 +86,6 @@ exports.scheduledRssFeeds = functions
 		timeoutSeconds: 300,
 	})
 	.pubsub
-	.schedule('3 */4 * * *')
+	.schedule('3 */8 * * *')
 	.timeZone('America/Chicago')
 	.onRun(collectRssFeeds);
